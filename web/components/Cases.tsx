@@ -1,4 +1,6 @@
 import t from "@/messages/ar.json";
+import Reveal from "./motion/Reveal";
+import Stagger, { StaggerItem } from "./motion/Stagger";
 import BeforeAfterSlider from "./BeforeAfterSlider";
 import { Eyebrow, SectionTitle } from "./ui";
 
@@ -9,7 +11,7 @@ export default function Cases() {
   return (
     <section id="cases" className="px-5 py-16 lg:px-8 lg:py-28">
       <div className="mx-auto flex max-w-[1200px] flex-col gap-6 lg:gap-12">
-        <div className="flex items-end justify-between">
+        <Reveal className="flex items-end justify-between">
           <div className="flex flex-col gap-2 lg:gap-3">
             <Eyebrow>{c.eyebrow}</Eyebrow>
             <SectionTitle>{c.title}</SectionTitle>
@@ -18,10 +20,10 @@ export default function Cases() {
           <a href="#cases" className="hidden text-base font-semibold lg:inline">
             {c.seeAll}
           </a>
-        </div>
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+        </Reveal>
+        <Stagger className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           {c.items.map((item) => (
-            <div key={item.t} className="flex flex-col gap-2.5 lg:gap-3.5">
+            <StaggerItem key={item.t} className="flex flex-col gap-2.5 lg:gap-3.5">
               <BeforeAfterSlider
                 before={item.before}
                 after={item.after}
@@ -37,9 +39,9 @@ export default function Cases() {
                   {item.tag}
                 </span>
               </div>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </Stagger>
         <a href="#cases" className="self-center font-semibold lg:hidden">
           {c.seeAll}
         </a>

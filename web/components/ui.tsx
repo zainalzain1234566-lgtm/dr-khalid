@@ -6,9 +6,7 @@ export function Eyebrow({ children }: { children: ReactNode }) {
 
 export function SectionTitle({ children, className = "" }: { children: ReactNode; className?: string }) {
   return (
-    <h2 className={`font-heading text-2xl leading-[1.25] font-bold text-ink-900 lg:text-[34px] ${className}`}>
-      {children}
-    </h2>
+    <h2 className={`font-heading text-2xl leading-[1.25] font-bold text-ink-900 lg:text-[34px] ${className}`}>{children}</h2>
   );
 }
 

@@ -1,5 +1,7 @@
 import Image from "next/image";
 import t from "@/messages/ar.json";
+import Reveal from "./motion/Reveal";
+import Stagger, { StaggerItem } from "./motion/Stagger";
 import { Eyebrow, SectionTitle } from "./ui";
 
 const d = t.doctors;
@@ -32,41 +34,41 @@ export default function Doctors() {
         className="pointer-events-none absolute top-10 -end-[120px] hidden w-[640px] max-w-none opacity-5 lg:block"
       />
       <div className="relative mx-auto flex max-w-[1200px] flex-col gap-7 lg:gap-14">
-        <div className="flex flex-col items-center gap-2 text-center lg:gap-3">
+        <Reveal className="flex flex-col items-center gap-2 text-center lg:gap-3">
           <Eyebrow>{d.eyebrow}</Eyebrow>
           <SectionTitle>
             <span className="lg:hidden">{d.titleShort}</span>
             <span className="hidden lg:inline">{d.title}</span>
           </SectionTitle>
-        </div>
+        </Reveal>
 
         {/* Desktop: lead large, team smaller, heads aligned to the top */}
-        <div className="hidden grid-cols-[1.5fr_1fr_1fr] items-start gap-8 lg:grid">
+        <Stagger className="hidden grid-cols-[1.5fr_1fr_1fr] items-start gap-8 lg:grid">
           {[{ ...d.lead, frame: "h-[560px]" }, ...d.team.map((m) => ({ ...m, frame: "h-[400px]" }))].map((doc) => (
-            <div key={doc.name} className="flex flex-col gap-5">
+            <StaggerItem key={doc.name} className="flex flex-col gap-5">
               <Portrait src={doc.img} alt={doc.name} frame={`${doc.frame} rounded-b-lg`} sizes="480px" />
               <div className="flex flex-col gap-1 text-center">
                 <b className="font-heading text-[22px] font-semibold text-ink-900">{doc.name}</b>
                 <span className="text-[15px] text-ink-500">{doc.role}</span>
               </div>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </Stagger>
 
         {/* Mobile */}
-        <div className="flex flex-col gap-2.5 lg:hidden">
+        <Reveal className="flex flex-col gap-2.5 lg:hidden">
           <Portrait src={d.lead.img} alt={d.lead.name} frame="h-[380px] rounded-b-lg" sizes="350px" />
           <b className="text-center font-heading text-[19px] font-semibold text-ink-900">{d.lead.name}</b>
           <span className="-mt-1.5 text-center text-sm text-ink-500">{d.lead.roleShort}</span>
-        </div>
-        <div className="grid grid-cols-2 gap-3.5 lg:hidden">
+        </Reveal>
+        <Stagger className="grid grid-cols-2 gap-3.5 lg:hidden">
           {d.team.map((doc) => (
-            <div key={doc.name} className="flex flex-col gap-2">
+            <StaggerItem key={doc.name} className="flex flex-col gap-2">
               <Portrait src={doc.img} alt={doc.name} frame="h-[220px] rounded-b-[20px]" sizes="240px" />
               <b className="text-center font-heading text-[15px] font-semibold text-ink-900">{doc.name}</b>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </Stagger>
       </div>
     </section>
   );

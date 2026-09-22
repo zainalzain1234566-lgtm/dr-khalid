@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Sans_Arabic, Readex_Pro } from "next/font/google";
+import MotionProvider from "@/components/motion/MotionProvider";
 import t from "@/messages/ar.json";
 import "./globals.css";
 
@@ -24,7 +25,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="ar" dir="rtl" className={`${readex.variable} ${plex.variable} antialiased`}>
-      <body>{children}</body>
+      <body>
+        <MotionProvider dir="rtl">{children}</MotionProvider>
+      </body>
     </html>
   );
 }

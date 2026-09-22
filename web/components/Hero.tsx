@@ -1,9 +1,17 @@
 import Image from "next/image";
 import t from "@/messages/ar.json";
 import { phoneHref, whatsappHref } from "@/lib/site";
+import CountUp from "./motion/CountUp";
+import { HeroArch, HeroCard } from "./motion/HeroMotion";
+import Stagger, { StaggerItem } from "./motion/Stagger";
+import TapLink from "./motion/TapLink";
 import { WhatsAppIcon } from "./ui";
 
 const h = t.hero;
+
+function BadgeTitle({ b }: { b: (typeof h.badges)[number] }) {
+  return b.count ? <CountUp {...b.count} /> : <>{b.title}</>;
+}
 
 export default function Hero() {
   return (
@@ -27,40 +35,48 @@ export default function Hero() {
         className="pointer-events-none absolute top-0 -end-10 w-[360px] max-w-none opacity-5 lg:hidden"
       />
 
-      <div className="relative flex flex-col gap-[22px] lg:gap-7">
-        <span className="hidden self-start rounded-full bg-brand-100 px-4 py-2 text-sm font-semibold text-brand-700 lg:inline-block">
-          {h.location}
-        </span>
-        <h1 className="font-heading text-[34px] leading-[1.2] font-bold text-balance text-ink-900 lg:text-[56px] lg:leading-[1.15]">
-          {h.titleBefore}
-          <span className="text-brand-500">{h.titleAccent}</span>
-          {h.titleAfter}
-        </h1>
-        <p className="max-w-[540px] text-base leading-[1.7] text-ink-700 lg:text-[19px]">
-          <span className="lg:hidden">{h.subtitleShort}</span>
-          <span className="hidden lg:inline">{h.subtitle}</span>
-        </p>
+      <Stagger onLoad delay={0.1} className="relative flex flex-col gap-[22px] lg:gap-7">
+        <StaggerItem className="hidden self-start lg:block">
+          <span className="inline-block rounded-full bg-brand-100 px-4 py-2 text-sm font-semibold text-brand-700">
+            {h.location}
+          </span>
+        </StaggerItem>
+        <StaggerItem>
+          <h1 className="font-heading text-[34px] leading-[1.2] font-bold text-balance text-ink-900 lg:text-[56px] lg:leading-[1.15]">
+            {h.titleBefore}
+            <span className="text-brand-500">{h.titleAccent}</span>
+            {h.titleAfter}
+          </h1>
+        </StaggerItem>
+        <StaggerItem>
+          <p className="max-w-[540px] text-base leading-[1.7] text-ink-700 lg:text-[19px]">
+            <span className="lg:hidden">{h.subtitleShort}</span>
+            <span className="hidden lg:inline">{h.subtitle}</span>
+          </p>
+        </StaggerItem>
 
-        <div className="hidden gap-3 lg:flex">
-          <a
+        <StaggerItem className="hidden gap-3 lg:flex">
+          <TapLink
+            lift
             href={whatsappHref}
             target="_blank"
             rel="noopener"
-            className="flex h-14 items-center gap-2.5 rounded-full bg-whatsapp px-8 text-[17px] font-semibold text-white transition hover:-translate-y-0.5 hover:text-white"
+            className="flex h-14 items-center gap-2.5 rounded-full bg-whatsapp px-8 text-[17px] font-semibold text-white hover:text-white"
           >
             <WhatsAppIcon className="size-5" />
             {h.whatsapp}
-          </a>
-          <a
+          </TapLink>
+          <TapLink
+            lift
             href={phoneHref}
-            className="flex h-14 items-center rounded-full border-[1.5px] border-brand-500 bg-surface px-8 text-[17px] font-semibold text-brand-700 transition hover:-translate-y-0.5"
+            className="flex h-14 items-center rounded-full border-[1.5px] border-brand-500 bg-surface px-8 text-[17px] font-semibold text-brand-700"
           >
             {h.call}
-          </a>
-        </div>
+          </TapLink>
+        </StaggerItem>
 
         {/* Trust badges — desktop */}
-        <div className="mt-3 hidden max-w-[600px] grid-cols-3 gap-4 lg:grid">
+        <StaggerItem className="mt-3 hidden max-w-[600px] grid-cols-3 gap-4 lg:grid">
           {h.badges.map((b) => (
             <div key={b.icon} className="flex items-center gap-3">
               <span
@@ -70,17 +86,17 @@ export default function Hero() {
                 {b.icon}
               </span>
               <div className="flex flex-col">
-                <b dir={b.ltr ? "ltr" : undefined} className={`font-heading text-[15px] font-semibold text-ink-900 ${b.ltr ? "text-right" : ""}`}>
-                  {b.title}
+                <b className="font-heading text-[15px] font-semibold text-ink-900">
+                  <BadgeTitle b={b} />
                 </b>
                 <span className="text-[13px] text-ink-500">{b.sub}</span>
               </div>
             </div>
           ))}
-        </div>
+        </StaggerItem>
 
         {/* Trust badges — mobile */}
-        <div className="grid grid-cols-3 gap-2 lg:hidden">
+        <StaggerItem className="grid grid-cols-3 gap-2 lg:hidden">
           {h.badges.map((b) => (
             <div
               key={b.icon}
@@ -95,12 +111,12 @@ export default function Hero() {
               <b className="font-heading text-[13px] font-semibold text-ink-900">{b.mobileTitle}</b>
             </div>
           ))}
-        </div>
-      </div>
+        </StaggerItem>
+      </Stagger>
 
-      {/* Dr. Khalid breaking out of the arch */}
+      {/* Dr. Khalid breaking out of the arch. The photo is the LCP element, so it stays static. */}
       <div className="relative order-first h-[400px] lg:order-none lg:h-[640px]">
-        <div className="absolute inset-x-4 bottom-0 h-[320px] rounded-[999px_999px_28px_28px] bg-brand-100 lg:inset-x-5 lg:h-[520px]" />
+        <HeroArch className="absolute inset-x-4 bottom-0 h-[320px] rounded-[999px_999px_28px_28px] bg-brand-100 lg:inset-x-5 lg:h-[520px]" />
         <div className="absolute inset-x-4 inset-y-0 overflow-hidden rounded-b-lg lg:inset-x-5">
           <Image
             src="/doctors/dr-khalid.webp"
@@ -112,10 +128,10 @@ export default function Hero() {
             className="absolute bottom-0 left-1/2 h-[380px] w-auto max-w-none -translate-x-1/2 lg:h-[600px]"
           />
         </div>
-        <div className="absolute end-0 bottom-14 flex flex-col gap-0.5 rounded-md bg-surface px-3.5 py-2.5 shadow-[0_8px_28px_rgba(31,35,40,0.12)] lg:-end-6 lg:bottom-[110px] lg:gap-1.5 lg:px-5 lg:py-4 lg:shadow-lg">
+        <HeroCard className="absolute end-0 bottom-14 flex flex-col gap-0.5 rounded-md bg-surface px-3.5 py-2.5 shadow-[0_8px_28px_rgba(31,35,40,0.12)] lg:-end-6 lg:bottom-[110px] lg:gap-1.5 lg:px-5 lg:py-4 lg:shadow-lg">
           <b className="font-heading text-sm font-semibold text-ink-900 lg:text-[17px]">{h.cardName}</b>
           <span className="text-xs text-ink-500 lg:text-sm">{h.cardRole}</span>
-        </div>
+        </HeroCard>
       </div>
     </section>
   );

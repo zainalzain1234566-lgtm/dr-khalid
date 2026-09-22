@@ -1,5 +1,6 @@
 import Image from "next/image";
 import t from "@/messages/ar.json";
+import Reveal from "./motion/Reveal";
 import { Eyebrow, SectionTitle } from "./ui";
 
 const l = t.location;
@@ -7,7 +8,10 @@ const l = t.location;
 function MapPlaceholder({ className }: { className: string }) {
   // TODO(clinic): replace with the Google Maps embed once the maps link is confirmed.
   return (
-    <div dir="ltr" className={`placeholder-stripes flex items-center justify-center font-mono font-medium text-ink-500 ${className}`}>
+    <div
+      dir="ltr"
+      className={`placeholder-stripes flex items-center justify-center font-mono font-medium text-ink-500 ${className}`}
+    >
       {l.mapPlaceholder}
     </div>
   );
@@ -17,7 +21,7 @@ export default function Location() {
   return (
     <section id="contact" className="px-5 py-16 lg:px-8 lg:py-28">
       <div className="mx-auto flex max-w-[1200px] flex-col gap-[18px] lg:grid lg:grid-cols-[1fr_1.3fr] lg:items-stretch lg:gap-12">
-        <div className="flex flex-col gap-[18px] lg:gap-6">
+        <Reveal className="flex flex-col gap-[18px] lg:gap-6">
           <div className="flex flex-col gap-[18px] lg:gap-3">
             <Eyebrow>{l.eyebrow}</Eyebrow>
             <SectionTitle>{l.title}</SectionTitle>
@@ -45,8 +49,10 @@ export default function Location() {
               </div>
             ))}
           </div>
-        </div>
-        <MapPlaceholder className="hidden min-h-[560px] rounded-lg text-sm lg:flex" />
+        </Reveal>
+        <Reveal delay={0.1} className="hidden lg:block">
+          <MapPlaceholder className="h-full min-h-[560px] rounded-lg text-sm" />
+        </Reveal>
       </div>
     </section>
   );

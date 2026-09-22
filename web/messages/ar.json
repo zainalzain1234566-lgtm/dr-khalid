@@ -39,7 +39,7 @@
     "badges": [
       { "icon": "LAB", "title": "مختبر داخلي", "sub": "داخل العيادة", "mobileTitle": "مختبر داخلي" },
       { "icon": "3D", "title": "أشعة ثلاثية", "sub": "تشخيص دقيق", "mobileTitle": "أشعة ثلاثية" },
-      { "icon": "30K", "title": "+30.5K", "sub": "متابع يثق بنا", "mobileTitle": "متابع يثق بنا", "ltr": true }
+      { "icon": "30K", "title": "+30.5K", "sub": "متابع يثق بنا", "mobileTitle": "متابع يثق بنا", "count": { "value": 30.5, "decimals": 1, "prefix": "+", "suffix": "K" } }
     ]
   },
   "services": {

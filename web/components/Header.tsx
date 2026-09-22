@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import t from "@/messages/ar.json";
 import { whatsappHref } from "@/lib/site";
+import TapLink from "./motion/TapLink";
 
 const h = t.header;
 
@@ -39,14 +40,15 @@ export default function Header() {
         </nav>
         <div className="flex items-center gap-3">
           <LangSwitch className="px-3.5 py-2 text-sm" />
-          <a
+          <TapLink
+            lift
             href={whatsappHref}
             target="_blank"
             rel="noopener"
-            className="flex h-12 items-center rounded-full bg-brand-500 px-7 text-base font-semibold text-white transition hover:text-white hover:-translate-y-0.5 hover:bg-brand-600"
+            className="flex h-12 items-center rounded-full bg-brand-500 px-7 text-base font-semibold text-white transition-colors hover:bg-brand-600 hover:text-white"
           >
             {h.book}
-          </a>
+          </TapLink>
         </div>
       </header>
 
