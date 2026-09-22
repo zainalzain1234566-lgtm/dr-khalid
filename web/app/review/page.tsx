@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ReviewForm from "./ReviewForm";
 
-export const metadata: Metadata = { title: "قيّم تجربتك — عيادات الدكتور خالد العطار" };
+export const metadata: Metadata = { title: "قيّم تجربتك — عيادات الدكتور خالد العطار", robots: { index: false } };
 
 export default function ReviewPage() {
   return (

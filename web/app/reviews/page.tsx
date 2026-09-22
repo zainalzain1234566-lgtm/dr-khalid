@@ -9,7 +9,7 @@ import { whatsappHref } from "@/lib/site";
 import { approvedReviews } from "@/lib/reviews";
 import ReviewsList from "./ReviewsList";
 
-export const metadata: Metadata = { title: "آراء المرضى — عيادات الدكتور خالد العطار" };
+export const metadata: Metadata = { title: "آراء المرضى — عيادات الدكتور خالد العطار", alternates: { canonical: "/reviews" } };
 
 const primary = "flex h-[52px] items-center justify-center rounded-full bg-brand-500 px-8 font-semibold text-white hover:bg-brand-600 hover:text-white";
 
