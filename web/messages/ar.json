@@ -16,12 +16,12 @@
     "menuOpen": "فتح القائمة",
     "menuClose": "إغلاق القائمة",
     "nav": [
-      { "href": "#services", "label": "الخدمات" },
-      { "href": "#lab", "label": "المختبر" },
-      { "href": "#cases", "label": "الحالات" },
-      { "href": "#doctors", "label": "الأطباء" },
-      { "href": "#reviews", "label": "التقييمات" },
-      { "href": "#contact", "label": "التواصل" }
+      { "href": "/#services", "label": "الخدمات" },
+      { "href": "/#lab", "label": "المختبر" },
+      { "href": "/#cases", "label": "الحالات" },
+      { "href": "/#doctors", "label": "الأطباء" },
+      { "href": "/#reviews", "label": "التقييمات" },
+      { "href": "/#contact", "label": "التواصل" }
     ]
   },
   "hero": {

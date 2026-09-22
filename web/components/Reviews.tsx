@@ -14,7 +14,7 @@ function Actions({ className }: { className: string }) {
       <TapLink href="/review" className={`${base} bg-brand-500 text-white hover:bg-brand-600 hover:text-white`}>
         {r.write}
       </TapLink>
-      <TapLink href="#reviews" className={`${base} border-[1.5px] border-brand-500 text-brand-700`}>
+      <TapLink href="/reviews" className={`${base} border-[1.5px] border-brand-500 text-brand-700`}>
         {r.seeAll}
       </TapLink>
     </div>

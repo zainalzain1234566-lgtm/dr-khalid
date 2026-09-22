@@ -1,6 +1,6 @@
 import { list } from "@vercel/blob";
 
-export type Review = { id: string; doctor: string; case: string; stars: number; text: string; date: string };
+export type Review = { id: string; name?: string; doctor: string; case: string; stars: number; text: string; date: string };
 
 // Approved reviews, newest first. Moderated from Telegram (see app/api/telegram/route.ts).
 // ponytail: one fetch per review; move to a DB when there are hundreds.

@@ -17,6 +17,7 @@ export default function ReviewForm() {
   const [rate, setRate] = useState(0);
   const [cs, setCs] = useState("");
   const [desc, setDesc] = useState("");
+  const [name, setName] = useState("");
   const [errs, setErrs] = useState(false);
   const [phase, setPhase] = useState<"form" | "busy" | "net" | "success">("form");
 
@@ -28,7 +29,7 @@ export default function ReviewForm() {
     const res = await fetch("/api/review", {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ doctor: doctors[doc].name, stars: rate, case: cs, text: desc }),
+      body: JSON.stringify({ doctor: doctors[doc].name, stars: rate, case: cs, text: desc, name }),
     }).catch(() => null);
     setPhase(res?.ok ? "success" : "net");
   }
@@ -124,6 +125,20 @@ export default function ReviewForm() {
             {cases.map((c) => <option key={c} value={c}>{c}</option>)}
           </select>
           {errs && !cs && <span role="alert" className={err}>يرجى اختيار نوع العلاج</span>}
+        </div>
+
+        <div className="flex flex-col gap-2.5">
+          <label htmlFor="name" className={legend}>
+            الاسم <span className="font-body text-sm font-normal text-ink-500">(اختياري)</span>
+          </label>
+          <input
+            id="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            maxLength={40}
+            autoComplete="given-name"
+            className={`h-[52px] rounded-[12px] border-[1.5px] border-line bg-bg px-4 text-ink-900 ${ring}`}
+          />
         </div>
 
         <div className="flex flex-col gap-2.5">
