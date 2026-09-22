@@ -1,6 +1,5 @@
-// TODO(clinic): replace with the real phone number (placeholder from the design).
-export const PHONE_DISPLAY = "07XX XXX XXXX";
-const PHONE_E164 = "+964XXXXXXXXXX";
+export const PHONE_DISPLAY = "0773 390 0003";
+const PHONE_E164 = "+9647733900003";
 
 export const INSTAGRAM_HANDLE = "@dr.khalid_al_attar";
 export const INSTAGRAM_URL = "https://www.instagram.com/dr.khalid_al_attar/";
