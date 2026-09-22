@@ -42,17 +42,26 @@ export default function Doctors() {
           </SectionTitle>
         </Reveal>
 
-        {/* Desktop: lead large, team smaller, heads aligned to the top */}
-        <Stagger className="hidden grid-cols-[1.5fr_1fr_1fr] items-start gap-8 lg:grid">
-          {[{ ...d.lead, frame: "h-[560px]" }, ...d.team.map((m) => ({ ...m, frame: "h-[400px]" }))].map((doc) => (
-            <StaggerItem key={doc.name} className="flex flex-col gap-5">
-              <Portrait src={doc.img} alt={doc.name} frame={`${doc.frame} rounded-b-lg`} sizes="480px" />
-              <div className="flex flex-col gap-1 text-center">
-                <b className="font-heading text-[22px] font-semibold text-ink-900">{doc.name}</b>
-                <span className="text-[15px] text-ink-500">{doc.role}</span>
-              </div>
-            </StaggerItem>
-          ))}
+        {/* Desktop: lead alone on row 1, team side by side on row 2 */}
+        <Stagger className="hidden flex-col items-center gap-14 lg:flex">
+          <StaggerItem className="flex w-[480px] flex-col gap-5">
+            <Portrait src={d.lead.img} alt={d.lead.name} frame="h-[560px] rounded-b-lg" sizes="480px" />
+            <div className="flex flex-col gap-1 text-center">
+              <b className="font-heading text-2xl font-semibold text-ink-900">{d.lead.name}</b>
+              <span className="text-[15px] text-ink-500">{d.lead.role}</span>
+            </div>
+          </StaggerItem>
+          <div className="grid grid-cols-[360px_360px] gap-12">
+            {d.team.map((doc) => (
+              <StaggerItem key={doc.name} className="flex flex-col gap-5">
+                <Portrait src={doc.img} alt={doc.name} frame="h-[400px] rounded-b-lg" sizes="360px" />
+                <div className="flex flex-col gap-1 text-center">
+                  <b className="font-heading text-[22px] font-semibold text-ink-900">{doc.name}</b>
+                  <span className="text-[15px] text-ink-500">{doc.role}</span>
+                </div>
+              </StaggerItem>
+            ))}
+          </div>
         </Stagger>
 
         {/* Mobile */}
