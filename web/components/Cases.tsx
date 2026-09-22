@@ -1,3 +1,4 @@
+import { list } from "@vercel/blob";
 import t from "@/messages/ar.json";
 import Reveal from "./motion/Reveal";
 import Stagger, { StaggerItem } from "./motion/Stagger";
@@ -7,7 +8,19 @@ import { Eyebrow, SectionTitle } from "./ui";
 const c = t.cases;
 const fill = (s: string, title: string) => s.replace("{title}", title);
 
-export default function Cases() {
+// Cases uploaded by the owner via the Telegram bot (cases/<service idx>/{before,after}.webp); shown only when both exist.
+async function uploaded() {
+  const { blobs } = await list({ prefix: "cases/" }).catch(() => ({ blobs: [] }));
+  const url = (i: number, side: string) => blobs.find((b) => b.pathname === `cases/${i}/${side}.webp`)?.url;
+  return t.services.items.flatMap((s, i) => {
+    const before = url(i, "before");
+    const after = url(i, "after");
+    return before && after ? [{ t: s.t, tag: s.t, before, after }] : [];
+  });
+}
+
+export default async function Cases() {
+  const items = [...(await uploaded()), ...c.items.filter((i) => i.before && i.after)];
   return (
     <section id="cases" className="px-5 py-16 lg:px-8 lg:py-28">
       <div className="mx-auto flex max-w-[1200px] flex-col gap-6 lg:gap-12">
@@ -22,7 +35,7 @@ export default function Cases() {
           </a>
         </Reveal>
         <Stagger className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-          {c.items.map((item) => (
+          {items.map((item) => (
             <StaggerItem key={item.t} className="flex flex-col gap-2.5 lg:gap-3.5">
               <BeforeAfterSlider
                 before={item.before}
