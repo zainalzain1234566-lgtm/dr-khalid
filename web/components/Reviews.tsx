@@ -7,12 +7,11 @@ import { Eyebrow, Stars } from "./ui";
 
 const r = t.reviews;
 
-// TODO: link to /reviews and the review form once those pages exist.
 function Actions({ className }: { className: string }) {
   const base = "flex h-[52px] items-center justify-center rounded-full font-semibold lg:px-6 lg:text-base";
   return (
     <div className={className}>
-      <TapLink href="#reviews" className={`${base} bg-brand-500 text-white hover:bg-brand-600 hover:text-white`}>
+      <TapLink href="/review" className={`${base} bg-brand-500 text-white hover:bg-brand-600 hover:text-white`}>
         {r.write}
       </TapLink>
       <TapLink href="#reviews" className={`${base} border-[1.5px] border-brand-500 text-brand-700`}>
