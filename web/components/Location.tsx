@@ -1,18 +1,29 @@
 import Image from "next/image";
 import t from "@/messages/ar.json";
 import Reveal from "./motion/Reveal";
+import { MAPS_EMBED, MAPS_URL } from "@/lib/site";
 import { Eyebrow, SectionTitle } from "./ui";
 
 const l = t.location;
 
-function MapPlaceholder({ className }: { className: string }) {
-  // TODO(clinic): replace with the Google Maps embed once the maps link is confirmed.
+function Map({ className }: { className: string }) {
   return (
-    <div
-      dir="ltr"
-      className={`placeholder-stripes flex items-center justify-center font-mono font-medium text-ink-500 ${className}`}
-    >
-      {l.mapPlaceholder}
+    <div className={`relative overflow-hidden ${className}`}>
+      <iframe
+        src={MAPS_EMBED}
+        title={l.title}
+        loading="lazy"
+        referrerPolicy="no-referrer-when-downgrade"
+        className="absolute inset-0 size-full border-0"
+      />
+      <a
+        href={MAPS_URL}
+        target="_blank"
+        rel="noopener"
+        className="absolute bottom-3 start-3 rounded-full bg-surface px-4 py-2 text-sm font-semibold shadow-md"
+      >
+        فتح في خرائط Google
+      </a>
     </div>
   );
 }
@@ -35,7 +46,7 @@ export default function Location() {
             sizes="500px"
             className="hidden h-[220px] w-full rounded-md object-cover lg:block"
           />
-          <MapPlaceholder className="h-[220px] rounded-[20px] text-xs lg:hidden" />
+          <Map className="h-[220px] rounded-[20px] lg:hidden" />
           <div className="rounded-md border border-line bg-surface">
             {l.hours.map((row) => (
               <div
@@ -51,7 +62,7 @@ export default function Location() {
           </div>
         </Reveal>
         <Reveal delay={0.1} className="hidden lg:block">
-          <MapPlaceholder className="h-full min-h-[560px] rounded-lg text-sm" />
+          <Map className="h-full min-h-[560px] rounded-lg" />
         </Reveal>
       </div>
     </section>
