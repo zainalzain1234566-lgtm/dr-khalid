@@ -1,4 +1,4 @@
-import { list, put } from "@vercel/blob";
+import { del, head, list, put } from "@vercel/blob";
 import { revalidatePath } from "next/cache";
 import t from "@/messages/ar.json";
 
@@ -12,6 +12,7 @@ const api = (method: string, body: object) =>
 
 type Msg = {
   message_id: number;
+  text?: string;
   chat: { id: number };
   from?: { id: number };
   sticker?: { file_id: string; is_animated?: boolean; is_video?: boolean };
@@ -59,7 +60,21 @@ export async function POST(req: Request) {
   const edit = (text: string, reply_markup?: object) =>
     api("editMessageText", { chat_id: msg.chat.id, message_id: msg.message_id, text, reply_markup });
 
-  if (kind === "c" && cases[+idx]) {
+  if (kind === "r" && (idx === "post" || idx === "del") && /^[\w-]{36}$/.test(side)) {
+    // Review moderation: idx = action, side = review id.
+    const pending = `reviews/pending/${side}.json`;
+    const blob = await head(pending).catch(() => null);
+    if (blob && idx === "post") {
+      await put(`reviews/approved/${side}.json`, await (await fetch(blob.url)).text(), {
+        access: "public",
+        contentType: "application/json",
+        addRandomSuffix: false,
+      });
+      revalidatePath("/", "layout");
+    }
+    if (blob) await del(pending);
+    await edit(`${msg.text ?? ""}\n\n${!blob ? "⚠️ تمت معالجته سابقاً" : idx === "post" ? "✅ تم النشر" : "🗑 تم الحذف"}`);
+  } else if (kind === "c" && cases[+idx]) {
     await edit(`${cases[+idx]} — قبل أم بعد؟`, {
       inline_keyboard: [[
         { text: "قبل", callback_data: `s:${idx}:before` },

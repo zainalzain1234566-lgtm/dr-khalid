@@ -1,3 +1,4 @@
+import { put } from "@vercel/blob";
 import t from "@/messages/ar.json";
 
 const doctors = [t.doctors.lead, ...t.doctors.team].map((d) => d.name);
@@ -15,11 +16,25 @@ export async function POST(req: Request) {
     return Response.json({ ok: false, error: "invalid" }, { status: 400 });
   }
 
+  const id = crypto.randomUUID();
+  await put(
+    `reviews/pending/${id}.json`,
+    JSON.stringify({ id, doctor, case: kase, stars, text, date: new Date().toISOString() }),
+    { access: "public", contentType: "application/json", addRandomSuffix: false },
+  );
+
   const msg = `⭐ تقييم جديد\n\nالطبيب: ${doctor}\nالحالة: ${kase}\nالتقييم: ${"★".repeat(stars)}${"☆".repeat(5 - stars)}\n\n${text || "—"}`;
   const res = await fetch(`https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
     method: "POST",
     headers: { "content-type": "application/json" },
-    body: JSON.stringify({ chat_id: process.env.TELEGRAM_OWNER_ID, text: msg }),
+    body: JSON.stringify({ chat_id: process.env.TELEGRAM_OWNER_ID, text: msg,
+      reply_markup: {
+        inline_keyboard: [[
+          { text: "✅ نشر", callback_data: `r:post:${id}` },
+          { text: "🗑 حذف", callback_data: `r:del:${id}` },
+        ]],
+      },
+    }),
   });
 
   return Response.json({ ok: res.ok }, { status: res.ok ? 200 : 502 });

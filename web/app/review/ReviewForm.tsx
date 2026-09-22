@@ -38,7 +38,7 @@ export default function ReviewForm() {
       <div className="flex flex-col items-center gap-[18px] rounded-lg bg-surface px-5 py-12 text-center shadow-sm lg:px-10 lg:py-16">
         <span className="flex size-[88px] items-center justify-center rounded-full bg-brand-100 text-[40px] text-brand-500">✓</span>
         <h1 className="font-heading text-[30px] leading-tight font-bold text-ink-900 lg:text-[44px]">شكراً لتقييمك</h1>
-        <p className="max-w-[420px] leading-[1.7] text-ink-500">وصلنا تقييمك لـ{doctors[doc!].name}.</p>
+        <p className="max-w-[420px] leading-[1.7] text-ink-500">وصلنا تقييمك لـ{doctors[doc!].name}. سيظهر على الموقع بعد مراجعته.</p>
         <span dir="ltr" className="text-[26px] tracking-[4px] text-warning">{"★".repeat(rate)}</span>
         <Link href="/" className="mt-2 flex h-[52px] items-center rounded-full bg-brand-500 px-8 font-semibold text-white hover:bg-brand-600 hover:text-white">
           العودة إلى الرئيسية
