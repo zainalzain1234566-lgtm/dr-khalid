@@ -1,4 +1,5 @@
 import t from "@/messages/ar.json";
+import { approvedReviews } from "@/lib/reviews";
 import CountUp from "./motion/CountUp";
 import Reveal from "./motion/Reveal";
 import Stagger, { StaggerItem } from "./motion/Stagger";
@@ -21,7 +22,10 @@ function Actions({ className }: { className: string }) {
   );
 }
 
-export default function Reviews() {
+export default async function Reviews() {
+  const all = await approvedReviews();
+  const avg = all.length ? all.reduce((s, x) => s + x.stars, 0) / all.length : 0;
+  const count = all.length ? `من ${all.length} تقييم` : "لا توجد تقييمات بعد";
   return (
     <section id="reviews" className="bg-brand-50 px-5 py-16 lg:px-8 lg:py-28">
       <div className="mx-auto flex max-w-[1200px] flex-col gap-5 lg:grid lg:grid-cols-[320px_1fr] lg:gap-12">
@@ -29,35 +33,36 @@ export default function Reviews() {
           <Eyebrow>{r.eyebrow}</Eyebrow>
           {/* Desktop summary */}
           <div dir="ltr" className="hidden text-right font-heading text-7xl leading-none font-bold text-ink-900 lg:block">
-            <CountUp value={Number(r.average)} decimals={1} />
+            <CountUp value={avg} decimals={1} />
           </div>
           <Stars label={r.starsLabel} className="hidden text-right text-[22px] tracking-[2px] lg:block" />
-          <span className="hidden text-sm text-ink-500 lg:block">{r.countLabel}</span>
+          <span className="hidden text-sm text-ink-500 lg:block">{count}</span>
           <Actions className="mt-3 hidden gap-3 lg:flex" />
           {/* Mobile summary */}
           <div dir="ltr" className="flex items-center justify-end gap-3.5 lg:hidden">
             <Stars label={r.starsLabel} className="text-lg" />
             <b className="font-heading text-[44px] font-bold text-ink-900">
-              <CountUp value={Number(r.average)} decimals={1} />
+              <CountUp value={avg} decimals={1} />
             </b>
           </div>
         </Reveal>
 
         <Stagger className="grid grid-cols-1 gap-5 lg:grid-cols-3">
-          {r.items.map((item) => (
+          {all.slice(0, 3).map((item) => (
             <StaggerItem
-              key={item.n}
+              key={item.id}
               className="flex flex-col gap-2.5 rounded-md bg-surface p-[18px] lg:gap-3.5 lg:p-6 lg:shadow-sm"
             >
               <div className="flex justify-between">
-                <Stars label={r.starsLabel} className="lg:tracking-[2px]" />
-                <span className="hidden font-mono text-[11px] font-medium text-ink-500 lg:inline">{r.sample}</span>
+                <span role="img" aria-label={`${item.stars} من 5 نجوم`} dir="ltr" className="text-warning lg:tracking-[2px]">
+                  {"★".repeat(item.stars) + "☆".repeat(5 - item.stars)}
+                </span>
               </div>
-              <p className="flex-1 text-[15px] leading-[1.7] text-ink-700 lg:text-base">{item.q}</p>
+              <p className="line-clamp-5 flex-1 text-[15px] leading-[1.7] text-ink-700 lg:text-base">{item.text}</p>
               <div className="flex items-center justify-between lg:border-t lg:border-line lg:pt-3.5">
-                <b className="font-semibold text-ink-900">{item.n}</b>
+                <b className="font-semibold text-ink-900">{item.name || "مراجع"}</b>
                 <span className="rounded-sm bg-brand-100 px-2 py-0.5 text-xs font-semibold text-brand-700 lg:px-2.5 lg:py-[3px] lg:text-[13px]">
-                  {item.tag}
+                  {item.case}
                 </span>
               </div>
             </StaggerItem>
