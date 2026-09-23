@@ -4,6 +4,7 @@ import Footer from "./Footer";
 import Gallery from "./Gallery";
 import Header from "./Header";
 import Hero from "./Hero";
+import HashScroll from "./motion/HashScroll";
 import Lab from "./Lab";
 import Location from "./Location";
 import MobileBar from "./MobileBar";
@@ -28,6 +29,7 @@ export default function Home({ t }: { t: Messages }) {
       </main>
       <Footer t={t} />
       <MobileBar t={t} />
+      <HashScroll />
     </div>
   );
 }

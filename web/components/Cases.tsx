@@ -47,7 +47,7 @@ export default async function Cases({ t = ar }: { t?: Messages }) {
             </StaggerItem>
           ))}
         </Stagger>
-        <a href={t === ar ? "/cases" : "/en#cases"} className="self-center font-semibold lg:hidden">
+        <a href={t === ar ? "/cases" : "/en#cases"} className="flex min-h-11 items-center self-center font-semibold lg:hidden">
           {c.seeAll}
         </a>
       </div>

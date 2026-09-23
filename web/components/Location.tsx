@@ -18,7 +18,7 @@ function Map({ l, className }: { l: Messages["location"]; className: string }) {
         href={MAPS_URL}
         target="_blank"
         rel="noopener"
-        className="absolute bottom-3 start-3 rounded-full bg-surface px-4 py-2 text-sm font-semibold shadow-lg ring-1 ring-ink-900/5"
+        className="absolute bottom-3 start-3 flex min-h-11 items-center rounded-full bg-surface px-4 text-sm font-semibold shadow-lg ring-1 ring-ink-900/5"
       >
         {l.openMaps}
       </a>

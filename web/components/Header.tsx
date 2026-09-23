@@ -14,7 +14,7 @@ function LangSwitch({ h, className = "" }: { h: Messages["header"]; className?: 
       href={h.langHref}
       lang={h.langCode}
       dir="ltr"
-      className={`rounded-full border border-line font-semibold whitespace-nowrap text-ink-700 hover:text-brand-700 ${className}`}
+      className={`flex min-h-11 items-center rounded-full border border-line font-semibold whitespace-nowrap text-ink-700 hover:text-brand-700 ${className}`}
     >
       {h.langSwitch}
     </a>
@@ -24,12 +24,14 @@ function LangSwitch({ h, className = "" }: { h: Messages["header"]; className?: 
 export default function Header({ t = ar }: { t?: Messages }) {
   const h = t.header;
   const [open, setOpen] = useState(false);
+  // Logo goes to the top of the home page, from any page (#top alone only works on home).
+  const home = t === ar ? "/#top" : "/en#top";
 
   return (
     <>
       {/* Desktop: floating glass island, detached from the top edge */}
       <header className="sticky top-5 z-30 mx-auto mt-5 hidden w-max items-center gap-10 rounded-full bg-bg/75 py-2 ps-3 pe-2 shadow-md ring-1 ring-ink-900/5 backdrop-blur-xl lg:flex">
-        <a href="#top" className="flex items-center gap-3">
+        <a href={home} className="flex items-center gap-3">
           <Image src="/logo.webp" alt={h.logoAlt} width={50} height={48} className="h-10 w-auto" priority />
           <span className="flex flex-col leading-tight">
             <span className="font-heading text-[15px] font-bold text-ink-900">{h.clinicName}</span>
@@ -44,7 +46,7 @@ export default function Header({ t = ar }: { t?: Messages }) {
           ))}
         </nav>
         <div className="flex items-center gap-2">
-          <LangSwitch h={h} className="px-3.5 py-2 text-sm" />
+          <LangSwitch h={h} className="px-3.5 text-sm" />
           <TapLink
             href={whatsappHref}
             target="_blank"
@@ -59,12 +61,12 @@ export default function Header({ t = ar }: { t?: Messages }) {
 
       {/* Mobile: floating pill + full-screen glass menu */}
       <header className="sticky top-3 z-30 mx-3 mt-3 flex items-center justify-between gap-2 rounded-full bg-bg/80 py-2 ps-3 pe-2 shadow-md ring-1 ring-ink-900/5 backdrop-blur-xl lg:hidden">
-        <a href="#top" className="flex min-w-0 items-center gap-2">
+        <a href={home} className="flex min-w-0 items-center gap-2">
           <Image src="/logo.webp" alt={h.logoAlt} width={41} height={40} className="h-9 w-auto" priority />
           <b className="font-heading text-sm leading-tight font-bold text-balance text-ink-900">{h.mobileName}</b>
         </a>
         <div className="flex shrink-0 items-center gap-2">
-          <LangSwitch h={h} className="px-2.5 py-1.5 text-[13px]" />
+          <LangSwitch h={h} className="px-2.5 text-[13px]" />
           <button
             type="button"
             onClick={() => setOpen((o) => !o)}

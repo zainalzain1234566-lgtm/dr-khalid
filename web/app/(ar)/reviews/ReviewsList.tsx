@@ -29,7 +29,7 @@ export default function ReviewsList({ reviews }: { reviews: Review[] }) {
 
   return (
     <>
-      <div className="sticky top-[73px] z-20 border-b border-line lg:top-0 bg-bg/95">
+      <div className="sticky top-[73px] z-10 border-b border-line lg:top-0 bg-bg/95">
         <div className="mx-auto flex max-w-[1200px] items-center gap-3 px-4 py-2.5 lg:px-8 lg:py-4">
           <div role="group" aria-label="نوع العلاج" className="flex flex-1 gap-2 overflow-x-auto [scrollbar-width:none]">
             {chips.map((c) => (

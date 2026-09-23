@@ -43,8 +43,7 @@ export default function Lab({ t = ar }: { t?: Messages }) {
               <span className="hidden lg:inline">{l.title}</span>
             </h2>
             <p className="max-w-[520px] text-base leading-[1.7] text-deep-muted lg:text-[17px]">
-              <span className="lg:hidden">{l.bodyShort}</span>
-              <span className="hidden lg:inline">{l.body}</span>
+              {l.body}
             </p>
           </Reveal>
           <LabPhoto alt={l.photoAlt} className="h-60 lg:hidden" />

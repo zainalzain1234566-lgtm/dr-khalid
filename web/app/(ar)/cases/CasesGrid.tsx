@@ -39,6 +39,7 @@ export default function CasesGrid({ cases, initial }: { cases: Case[]; initial?:
   const chips = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState<number | null>(null);
   const [side, setSide] = useState(false);
+  const [zoom, setZoom] = useState<{ src: string; alt: string } | null>(null);
   const dialog = useRef<HTMLDialogElement>(null);
 
   const list = cases.filter((k) => chip === ALL || k.tag === chip);
@@ -62,7 +63,7 @@ export default function CasesGrid({ cases, initial }: { cases: Case[]; initial?:
 
   return (
     <>
-      <div className="sticky top-[73px] z-20 border-b border-line bg-bg/95 lg:top-0">
+      <div className="sticky top-[73px] z-10 border-b border-line bg-bg/95 lg:top-0">
         <div ref={chips} role="group" aria-label="نوع العلاج" className="mx-auto flex max-w-[1200px] gap-2 overflow-x-auto px-4 py-2.5 [scrollbar-width:none] lg:flex-wrap lg:px-8 lg:py-4">
           {[ALL, ...services].map((l) => (
             <button key={l} aria-pressed={chip === l} onClick={() => setChip(l)} className={pill(chip === l)}>
@@ -109,7 +110,11 @@ export default function CasesGrid({ cases, initial }: { cases: Case[]; initial?:
       <dialog
         ref={dialog}
         aria-label={m?.t}
-        onClose={() => setOpen(null)}
+        onClose={() => { setOpen(null); setZoom(null); }}
+        onCancel={(e) => {
+          // Esc closes the full-size photo first, then the case.
+          if (zoom) { e.preventDefault(); setZoom(null); }
+        }}
         onKeyDown={(e) => {
           // Arrow keys move between cases, unless the slider has focus (it uses them itself).
           if ((e.target as HTMLElement).role === "slider") return;
@@ -146,10 +151,15 @@ export default function CasesGrid({ cases, initial }: { cases: Case[]; initial?:
                 {side ? (
                   <div dir="ltr" className="grid grid-cols-2 gap-2">
                     {([[m.before, c.before, c.beforeAlt], [m.after, c.after, c.afterAlt]] as const).map(([src, l, alt]) => (
-                      <figure key={l} className="relative aspect-[3/4] overflow-hidden rounded-[16px] bg-line">
+                      <button
+                        key={l}
+                        onClick={() => setZoom({ src, alt: fill(alt, m.t) })}
+                        aria-label={`تكبير صورة ${l}`}
+                        className="relative aspect-[3/4] cursor-zoom-in overflow-hidden rounded-[16px] bg-line"
+                      >
                         <Image src={src} alt={fill(alt, m.t)} fill sizes="(min-width: 1024px) 330px, 50vw" className="object-cover" />
-                        <figcaption className="absolute top-3 right-3 rounded-full bg-white/92 px-3 py-1 text-[13px] font-semibold text-ink-900">{l}</figcaption>
-                      </figure>
+                        <span className="absolute top-3 right-3 rounded-full bg-white/92 px-3 py-1 text-[13px] font-semibold text-ink-900">{l}</span>
+                      </button>
                     ))}
                   </div>
                 ) : (
@@ -179,6 +189,12 @@ export default function CasesGrid({ cases, initial }: { cases: Case[]; initial?:
                 </div>
               </div>
             </div>
+          </div>
+        )}
+        {zoom && (
+          <div onClick={() => setZoom(null)} className="fixed inset-0 z-10 flex items-center justify-center bg-ink-900/92 p-4">
+            <Image src={zoom.src} alt={zoom.alt} width={2048} height={1536} sizes="100vw" className="h-auto max-h-[90dvh] w-auto max-w-full rounded-[16px] object-contain" />
+            <button onClick={() => setZoom(null)} aria-label="إغلاق" className={`${round} absolute top-4 left-4 border-white/30 bg-white/92 text-ink-900`}>✕</button>
           </div>
         )}
       </dialog>
