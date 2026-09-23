@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import ar from "@/messages/ar.json";
-import type { Messages } from "@/lib/i18n";
+import { isAr, type Messages } from "@/lib/i18n";
 import { whatsappHref } from "@/lib/site";
 import TapLink from "./motion/TapLink";
 import { CtaIcon } from "./ui";
@@ -25,7 +25,7 @@ export default function Header({ t = ar }: { t?: Messages }) {
   const h = t.header;
   const [open, setOpen] = useState(false);
   // Logo goes to the top of the home page, from any page (#top alone only works on home).
-  const home = t === ar ? "/#top" : "/en#top";
+  const home = isAr(t) ? "/#top" : "/en#top";
 
   return (
     <>

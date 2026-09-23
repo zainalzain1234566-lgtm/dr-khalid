@@ -1,4 +1,4 @@
-import { ar, type Messages } from "@/lib/i18n";
+import { ar, isAr, type Messages } from "@/lib/i18n";
 import { allCases } from "@/lib/cases";
 import Reveal from "./motion/Reveal";
 import Stagger, { StaggerItem } from "./motion/Stagger";
@@ -18,7 +18,7 @@ export default async function Cases({ t = ar }: { t?: Messages }) {
             <Eyebrow>{c.eyebrow}</Eyebrow>
             <SectionTitle>{c.title}</SectionTitle>
           </div>
-          <a href={t === ar ? "/cases" : "/en#cases"} className="hidden text-base font-semibold lg:inline">
+          <a href={isAr(t) ? "/cases" : "/en#cases"} className="hidden text-base font-semibold lg:inline">
             {c.seeAll}
           </a>
         </Reveal>
@@ -47,7 +47,7 @@ export default async function Cases({ t = ar }: { t?: Messages }) {
             </StaggerItem>
           ))}
         </Stagger>
-        <a href={t === ar ? "/cases" : "/en#cases"} className="flex min-h-11 items-center self-center font-semibold lg:hidden">
+        <a href={isAr(t) ? "/cases" : "/en#cases"} className="flex min-h-11 items-center self-center font-semibold lg:hidden">
           {c.seeAll}
         </a>
       </div>

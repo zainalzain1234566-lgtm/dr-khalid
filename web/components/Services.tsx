@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ar, type Messages } from "@/lib/i18n";
+import { ar, isAr, type Messages } from "@/lib/i18n";
 import LinkPending from "./motion/LinkPending";
 import PinSteps from "./motion/PinSteps";
 import Reveal from "./motion/Reveal";
@@ -23,7 +23,7 @@ export default function Services({ t = ar }: { t?: Messages }) {
               className="bezel transition-[box-shadow,translate] duration-700 ease-fluid [--r:1.25rem] hover:-translate-y-1 lg:[--r:2rem] lg:hover:shadow-md"
             >
               <Link
-                href={t === ar ? `/cases?t=${encodeURIComponent(item.t)}` : "/en#cases"}
+                href={isAr(t) ? `/cases?t=${encodeURIComponent(item.t)}` : "/en#cases"}
                 className="bezel-core relative flex h-full flex-col gap-2.5 p-4 lg:gap-4 lg:p-6"
               >
               <span
