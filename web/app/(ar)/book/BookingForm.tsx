@@ -121,7 +121,7 @@ export default function BookingForm() {
     ));
 
   return (
-    <div className="grid w-full items-start gap-10 lg:grid-cols-[minmax(0,1fr)_360px]">
+    <div className="grid w-full grid-cols-1 items-start gap-10 lg:grid-cols-[minmax(0,1fr)_360px]">
       <div className="flex flex-col gap-6 lg:gap-8">
         <div className="flex flex-col gap-3.5">
           <h1 className="font-heading text-[26px] leading-tight font-bold text-ink-900 lg:text-4xl">احجز موعدك</h1>
