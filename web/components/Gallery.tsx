@@ -10,13 +10,25 @@ import Reveal from "./motion/Reveal";
 import { DURATION, EASE } from "./motion/tokens";
 import { Eyebrow, SectionTitle } from "./ui";
 
+// Mobile shows every photo, in a full / half / half rhythm, uncropped: full-width tiles use the
+// photo's own ratio (`w/h`); half tiles are 3:2 like the photos. `ar` = desktop tile shape; only
+// those six appear in the desktop strip.
 const PHOTOS = [
-  { id: "17", ar: "4/3" },
-  { id: "15", ar: "3/4" },
-  { id: "09", ar: "4/3" },
-  { id: "12", ar: "1/1" },
-  { id: "02", ar: "3/4" },
-  { id: "03", ar: "4/3" },
+  { id: "17", w: 2048, h: 1365, ar: "4/3" },
+  { id: "15", w: 2048, h: 1365, ar: "3/4" },
+  { id: "11", w: 2048, h: 1365, ar: "4/3" },
+  { id: "04", w: 2048, h: 1477 },
+  { id: "12", w: 2048, h: 1365, ar: "1/1" },
+  { id: "16", w: 2048, h: 1365, ar: "3/4" },
+  { id: "07", w: 2048, h: 1248 },
+  { id: "03", w: 2048, h: 1365, ar: "4/3" },
+  { id: "05", w: 2048, h: 1365 },
+  { id: "10", w: 2048, h: 1422 },
+  { id: "08", w: 2048, h: 1365 },
+  { id: "14", w: 2048, h: 1365 },
+  { id: "13", w: 2048, h: 1473 },
+  { id: "01", w: 1536, h: 1024 },
+  { id: "06", w: 2048, h: 1365 },
 ].map((p) => ({ ...p, src: `/clinic/${p.id}.webp` }));
 
 // layoutId needs the layout features, which aren't in the app-wide domAnimation bundle.
@@ -39,6 +51,7 @@ export default function Gallery({ t = ar }: { t?: Messages }) {
       el.dataset.h = "";
       const dir = document.documentElement.dir === "rtl" ? 1 : -1;
       const distance = () => el.scrollWidth - el.clientWidth;
+      const shown = (el: HTMLElement) => [...el.children].filter((c) => (c as HTMLElement).offsetWidth).length;
       gsap.to(el, {
         x: () => dir * distance(),
         ease: "none",
@@ -48,7 +61,7 @@ export default function Gallery({ t = ar }: { t?: Messages }) {
           end: () => `+=${distance()}`,
           pin: true,
           scrub: 0.5,
-          snap: 1 / Math.max(1, el.children.length - 1),
+          snap: () => 1 / Math.max(1, shown(el) - 1),
           invalidateOnRefresh: true,
         },
       });
@@ -81,9 +94,9 @@ export default function Gallery({ t = ar }: { t?: Messages }) {
           <Reveal>
             <div
               ref={track}
-              className="columns-2 gap-2.5 lg:columns-4 lg:gap-4 data-h:flex data-h:h-[62vh] data-h:columns-auto data-h:will-change-transform"
+              className="grid grid-cols-2 gap-2.5 lg:block lg:columns-4 lg:gap-4 data-h:flex data-h:h-[62vh] data-h:columns-auto data-h:will-change-transform"
             >
-            {PHOTOS.map((p) => (
+            {PHOTOS.map((p, i) => (
               <m.button
                 key={p.id}
                 type="button"
@@ -94,15 +107,15 @@ export default function Gallery({ t = ar }: { t?: Messages }) {
                   setOpenId(p.id);
                 }}
                 aria-label={g.openLabel}
-                className="mb-2.5 block w-full cursor-zoom-in break-inside-avoid overflow-hidden rounded-xl focus-visible:ring-[3px] focus-visible:ring-brand-700 focus-visible:outline-none lg:mb-4 lg:rounded-[1.5rem] [[data-h]_&]:mb-0 [[data-h]_&]:h-full [[data-h]_&]:w-auto [[data-h]_&]:shrink-0"
-                style={{ aspectRatio: p.ar }}
+                className={`${i % 3 ? "" : "col-span-2"} ${p.ar ? "" : "lg:hidden"} block aspect-(--m) w-full cursor-zoom-in break-inside-avoid overflow-hidden rounded-xl focus-visible:ring-[3px] focus-visible:ring-brand-700 focus-visible:outline-none lg:mb-4 lg:aspect-(--ar) lg:rounded-[1.5rem] [[data-h]_&]:mb-0 [[data-h]_&]:h-full [[data-h]_&]:w-auto [[data-h]_&]:shrink-0`}
+                style={{ "--ar": p.ar, "--m": i % 3 ? "3/2" : `${p.w}/${p.h}` } as React.CSSProperties}
               >
                 <Image
                   src={p.src}
                   alt={g.photoAlt}
                   width={600}
                   height={600}
-                  sizes="(min-width: 1024px) 290px, 175px"
+                  sizes={`(min-width: 1024px) 290px, ${i % 3 ? "50vw" : "100vw"}`}
                   className="size-full object-cover"
                 />
               </m.button>
