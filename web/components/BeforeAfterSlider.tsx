@@ -13,6 +13,8 @@ type Props = {
   afterLabel: string;
   beforeAlt: string;
   afterAlt: string;
+  aspect?: string;
+  sizes?: string;
 };
 
 const clamp = (v: number) => Math.max(0, Math.min(100, v));
@@ -21,7 +23,7 @@ const clamp = (v: number) => Math.max(0, Math.min(100, v));
  * Draggable before/after comparison (mouse, touch, keyboard).
  * Always laid out LTR — "before" on the left — so it behaves identically in RTL and LTR.
  */
-export default function BeforeAfterSlider({ before, after, label, beforeLabel, afterLabel, beforeAlt, afterAlt }: Props) {
+export default function BeforeAfterSlider({ before, after, label, beforeLabel, afterLabel, beforeAlt, afterAlt, aspect = "aspect-[4/5]", sizes = "(min-width: 1024px) 384px, 350px" }: Props) {
   const [pos, setPos] = useState(50);
   const dragging = useRef(false);
   const touched = useRef(false);
@@ -87,7 +89,7 @@ export default function BeforeAfterSlider({ before, after, label, beforeLabel, a
       onPointerMove={(e) => dragging.current && update(e)}
       onPointerUp={() => (dragging.current = false)}
       onPointerCancel={() => (dragging.current = false)}
-      className="relative aspect-[4/5] cursor-ew-resize touch-none overflow-hidden rounded-[inherit] bg-line select-none focus-visible:ring-[3px] focus-visible:ring-brand-700 focus-visible:outline-none"
+      className={`relative ${aspect} cursor-ew-resize touch-none overflow-hidden rounded-[inherit] bg-line select-none focus-visible:ring-[3px] focus-visible:ring-brand-700 focus-visible:outline-none`}
     >
       {placeholder ? (
         <>
@@ -104,7 +106,7 @@ export default function BeforeAfterSlider({ before, after, label, beforeLabel, a
             src={after}
             alt={afterAlt}
             fill
-            sizes="(min-width: 1024px) 384px, 350px"
+            sizes={sizes}
             className="pointer-events-none object-cover"
             draggable={false}
           />
@@ -112,7 +114,7 @@ export default function BeforeAfterSlider({ before, after, label, beforeLabel, a
             src={before}
             alt={beforeAlt}
             fill
-            sizes="(min-width: 1024px) 384px, 350px"
+            sizes={sizes}
             className="pointer-events-none object-cover"
             style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}
             draggable={false}

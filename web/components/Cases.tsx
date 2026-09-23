@@ -1,5 +1,5 @@
-import { list } from "@vercel/blob";
 import { ar, type Messages } from "@/lib/i18n";
+import { allCases } from "@/lib/cases";
 import Reveal from "./motion/Reveal";
 import Stagger, { StaggerItem } from "./motion/Stagger";
 import BeforeAfterSlider from "./BeforeAfterSlider";
@@ -7,20 +7,9 @@ import { Eyebrow, SectionTitle } from "./ui";
 
 const fill = (s: string, title: string) => s.replace("{title}", title);
 
-// Cases uploaded by the owner via the Telegram bot (cases/<service idx>/{before,after}.webp); shown only when both exist.
-async function uploaded(t: Messages) {
-  const { blobs } = await list({ prefix: "cases/" }).catch(() => ({ blobs: [] }));
-  const url = (i: number, side: string) => blobs.find((b) => b.pathname === `cases/${i}/${side}.webp`)?.url;
-  return t.services.items.flatMap((s, i) => {
-    const before = url(i, "before");
-    const after = url(i, "after");
-    return before && after ? [{ t: s.t, tag: s.t, before, after }] : [];
-  });
-}
-
 export default async function Cases({ t = ar }: { t?: Messages }) {
   const c = t.cases;
-  const items = [...(await uploaded(t)), ...c.items.filter((i) => i.before && i.after)];
+  const items = await allCases(t);
   return (
     <section id="cases" className="px-5 py-24 lg:px-8 lg:py-36">
       <div className="mx-auto flex max-w-[1200px] flex-col gap-6 lg:gap-12">
@@ -29,8 +18,7 @@ export default async function Cases({ t = ar }: { t?: Messages }) {
             <Eyebrow>{c.eyebrow}</Eyebrow>
             <SectionTitle>{c.title}</SectionTitle>
           </div>
-          {/* TODO: point to /cases once that page exists. */}
-          <a href="#cases" className="hidden text-base font-semibold lg:inline">
+          <a href={t === ar ? "/cases" : "/en#cases"} className="hidden text-base font-semibold lg:inline">
             {c.seeAll}
           </a>
         </Reveal>
@@ -59,7 +47,7 @@ export default async function Cases({ t = ar }: { t?: Messages }) {
             </StaggerItem>
           ))}
         </Stagger>
-        <a href="#cases" className="self-center font-semibold lg:hidden">
+        <a href={t === ar ? "/cases" : "/en#cases"} className="self-center font-semibold lg:hidden">
           {c.seeAll}
         </a>
       </div>
