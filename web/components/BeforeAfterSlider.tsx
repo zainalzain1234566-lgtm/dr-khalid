@@ -87,7 +87,7 @@ export default function BeforeAfterSlider({ before, after, label, beforeLabel, a
       onPointerMove={(e) => dragging.current && update(e)}
       onPointerUp={() => (dragging.current = false)}
       onPointerCancel={() => (dragging.current = false)}
-      className="relative aspect-[4/5] cursor-ew-resize touch-none overflow-hidden rounded-lg bg-line select-none focus-visible:ring-[3px] focus-visible:ring-brand-700 focus-visible:outline-none"
+      className="relative aspect-[4/5] cursor-ew-resize touch-none overflow-hidden rounded-[inherit] bg-line select-none focus-visible:ring-[3px] focus-visible:ring-brand-700 focus-visible:outline-none"
     >
       {placeholder ? (
         <>

@@ -1,12 +1,32 @@
 import type { ReactNode } from "react";
 
-export function Eyebrow({ children }: { children: ReactNode }) {
-  return <span className="text-sm font-semibold text-brand-700 lg:text-[15px]">{children}</span>;
+export function Eyebrow({ children, className = "" }: { children: ReactNode; className?: string }) {
+  return (
+    <span
+      className={`inline-flex w-max items-center gap-2 rounded-full bg-brand-100/70 px-3 py-1 text-xs font-semibold tracking-wide text-brand-700 ring-1 ring-brand-500/15 ${className}`}
+    >
+      <i className="size-1.5 rounded-full bg-brand-500" />
+      {children}
+    </span>
+  );
+}
+
+/** Trailing icon nested in its own circle, flush to the button's end padding. Parent needs `group`. */
+export function CtaIcon({ className = "bg-black/10" }: { className?: string }) {
+  return (
+    <span
+      className={`flex size-9 shrink-0 items-center justify-center rounded-full transition-transform duration-500 ease-fluid group-hover:scale-105 group-hover:-translate-y-px group-hover:-translate-x-1 ltr:group-hover:translate-x-1 ${className}`}
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.5" className="size-4 rtl:-scale-x-100">
+        <path d="M7 17 17 7M9 7h8v8" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    </span>
+  );
 }
 
 export function SectionTitle({ children, className = "" }: { children: ReactNode; className?: string }) {
   return (
-    <h2 className={`font-heading text-2xl leading-[1.25] font-bold text-ink-900 lg:text-[34px] ${className}`}>{children}</h2>
+    <h2 className={`font-heading text-[28px] leading-[1.2] font-bold text-balance text-ink-900 lg:text-[44px] lg:leading-[1.15] ${className}`}>{children}</h2>
   );
 }
 

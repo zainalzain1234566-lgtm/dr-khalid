@@ -3,13 +3,13 @@ import { ar, type Messages } from "@/lib/i18n";
 import { phoneHref, whatsappHref } from "@/lib/site";
 import HeroIntro from "./motion/HeroMotion";
 import TapLink from "./motion/TapLink";
-import { WhatsAppIcon } from "./ui";
+import { CtaIcon, WhatsAppIcon } from "./ui";
 
 export default function Hero({ t = ar }: { t?: Messages }) {
   const h = t.hero;
   return (
     <HeroIntro
-      className="relative mx-auto flex max-w-[1264px] flex-col gap-[22px] px-5 pt-6 pb-16 lg:grid lg:grid-cols-[1fr_560px] lg:items-center lg:gap-12 lg:px-8 lg:pt-10 lg:pb-24"
+      className="relative mx-auto flex max-w-[1264px] flex-col gap-[22px] px-5 pt-8 pb-24 lg:grid lg:grid-cols-[1fr_560px] lg:items-center lg:gap-12 lg:px-8 lg:pt-16 lg:pb-36"
     >
       {/* Logo-stroke watermark (4–6% opacity) */}
       <Image
@@ -29,7 +29,7 @@ export default function Hero({ t = ar }: { t?: Messages }) {
 
       <div className="relative flex flex-col gap-[22px] lg:gap-7">
         <div data-hero="item">
-          <h1 className="font-heading text-[34px] leading-[1.2] font-bold text-balance text-ink-900 lg:text-[56px] lg:leading-[1.15]">
+          <h1 className="font-heading text-[38px] leading-[1.15] font-bold tracking-tight text-balance text-ink-900 lg:text-[68px] lg:leading-[1.08]">
             {h.titleBefore}
             <span className="text-brand-500">{h.titleAccent}</span>
             {h.titleAfter}
@@ -48,17 +48,19 @@ export default function Hero({ t = ar }: { t?: Messages }) {
             href={whatsappHref}
             target="_blank"
             rel="noopener"
-            className="flex h-14 items-center gap-2.5 rounded-full bg-whatsapp px-8 text-[17px] font-semibold text-white hover:text-white"
+            className="group flex h-14 items-center gap-3 rounded-full bg-whatsapp ps-7 pe-2 text-[17px] font-semibold text-white shadow-md hover:text-white"
           >
             <WhatsAppIcon className="size-5" />
             {h.whatsapp}
+            <CtaIcon className="ms-1 size-10 bg-white/20" />
           </TapLink>
           <TapLink
             lift
             href={phoneHref}
-            className="flex h-14 items-center rounded-full border-[1.5px] border-brand-500 bg-surface px-8 text-[17px] font-semibold text-brand-700"
+            className="group flex h-14 items-center gap-3 rounded-full bg-surface ps-7 pe-2 text-[17px] font-semibold text-brand-700 shadow-sm ring-1 ring-brand-500/25"
           >
             {h.call}
+            <CtaIcon className="size-10 bg-brand-100" />
           </TapLink>
         </div>
 
@@ -87,7 +89,7 @@ export default function Hero({ t = ar }: { t?: Messages }) {
           {h.badges.map((b) => (
             <div
               key={b.icon}
-              className="flex flex-col items-center gap-1.5 rounded-md border border-line bg-surface px-2 py-3 text-center"
+              className="flex flex-col items-center gap-1.5 rounded-[1.25rem] bg-surface px-2 py-3.5 text-center shadow-sm ring-1 ring-ink-900/5"
             >
               <span
                 dir="ltr"
@@ -115,9 +117,11 @@ export default function Hero({ t = ar }: { t?: Messages }) {
             className="absolute bottom-0 left-1/2 h-[380px] w-auto max-w-none -translate-x-1/2 lg:h-[600px]"
           />
         </div>
-        <div data-hero="card" className="absolute end-0 bottom-14 flex flex-col gap-0.5 rounded-md bg-surface px-3.5 py-2.5 shadow-[0_8px_28px_rgba(31,35,40,0.12)] lg:-end-6 lg:bottom-[110px] lg:gap-1.5 lg:px-5 lg:py-4 lg:shadow-lg">
+        <div data-hero="card" className="bezel absolute end-0 bottom-14 shadow-lg! lg:-end-6 lg:bottom-[110px] [--r:1.25rem] lg:[--r:1.75rem]">
+          <div className="bezel-core flex flex-col gap-0.5 px-3.5 py-2.5 lg:gap-1.5 lg:px-5 lg:py-4">
           <b className="font-heading text-sm font-semibold text-ink-900 lg:text-[17px]">{h.cardName}</b>
           <span className="text-xs text-ink-500 lg:text-sm">{h.cardRole}</span>
+          </div>
         </div>
       </div>
     </HeroIntro>

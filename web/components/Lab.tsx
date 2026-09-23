@@ -7,7 +7,7 @@ import Stagger, { StaggerItem } from "./motion/Stagger";
 
 function LabPhoto({ alt, className }: { alt: string; className: string }) {
   return (
-    <ClipReveal className={`relative overflow-hidden rounded-lg ${className}`}>
+    <ClipReveal className={`relative overflow-hidden rounded-[1.5rem] ${className}`}>
       <Image src="/clinic/06.webp" alt={alt} fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
     </ClipReveal>
   );
@@ -30,13 +30,13 @@ function Benefit({ b }: { b: Messages["lab"]["benefits"][number] }) {
 export default function Lab({ t = ar }: { t?: Messages }) {
   const l = t.lab;
   return (
-    <section id="lab" className="bg-deep px-5 py-16 text-white lg:px-8 lg:py-28">
+    <section id="lab" className="bg-deep px-5 py-24 text-white lg:px-8 lg:py-36">
       <div className="mx-auto flex max-w-[1200px] flex-col gap-5 lg:grid lg:grid-cols-2 lg:items-center lg:gap-[72px]">
         <div className="flex flex-col gap-5 lg:gap-7">
           <Reveal className="flex flex-col gap-5 lg:gap-7">
             <div className="flex items-center gap-2.5 lg:gap-3">
               <Image src="/logo.webp" alt="" width={37} height={36} className="logo-white h-7 w-auto lg:h-9" />
-              <span className="text-sm font-semibold text-brand-100 lg:text-[15px]">{l.eyebrow}</span>
+              <span className="rounded-full bg-white/8 px-3 py-1 text-xs font-semibold tracking-wide text-brand-100 ring-1 ring-white/12">{l.eyebrow}</span>
             </div>
             <h2 className="font-heading text-[28px] leading-[1.25] font-bold text-balance text-white lg:text-[44px] lg:leading-[1.2]">
               <span className="lg:hidden">{l.titleShort}</span>
@@ -54,7 +54,9 @@ export default function Lab({ t = ar }: { t?: Messages }) {
             ))}
           </Stagger>
         </div>
-        <ScrubPhoto src="/clinic/06.webp" alt={l.photoAlt} className="hidden h-[600px] rounded-lg lg:block" />
+        <div className="bezel bezel-dark hidden [--pad:0.5rem] [--r:2.25rem] lg:block">
+          <ScrubPhoto src="/clinic/06.webp" alt={l.photoAlt} className="bezel-core h-[600px]" />
+        </div>
       </div>
     </section>
   );

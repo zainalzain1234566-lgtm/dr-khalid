@@ -24,7 +24,7 @@ function Portrait({ src, alt, frame, sizes }: { src: string; alt: string; frame:
 export default function Doctors({ t = ar }: { t?: Messages }) {
   const d = t.doctors;
   return (
-    <section id="doctors" className="relative overflow-hidden bg-brand-50 px-5 py-16 lg:px-8 lg:py-28">
+    <section id="doctors" className="relative overflow-hidden bg-brand-50 px-5 py-24 lg:px-8 lg:py-36">
       <Image
         src="/logo.webp"
         alt=""

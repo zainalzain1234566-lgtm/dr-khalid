@@ -29,7 +29,7 @@ export default function MobileBar({ t = ar }: { t?: Messages }) {
       transition={{ duration: DURATION.fast, ease: EASE }}
       inert={!shown}
       aria-hidden={!shown}
-      className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-[1.4fr_1fr] gap-2.5 border-t border-line bg-surface px-4 pt-3 pb-[max(18px,env(safe-area-inset-bottom))] lg:hidden"
+      className="fixed inset-x-3 bottom-[max(12px,env(safe-area-inset-bottom))] z-40 grid grid-cols-[1.4fr_1fr] gap-2 rounded-full bg-surface/85 p-1.5 shadow-lg ring-1 ring-ink-900/5 backdrop-blur-xl lg:hidden"
     >
       <TapLink
         href={whatsappHref}
@@ -42,7 +42,7 @@ export default function MobileBar({ t = ar }: { t?: Messages }) {
       </TapLink>
       <TapLink
         href={phoneHref}
-        className="flex h-[52px] items-center justify-center rounded-full border-[1.5px] border-brand-500 text-base font-semibold text-brand-700"
+        className="flex h-[52px] items-center justify-center rounded-full bg-brand-100 text-base font-semibold text-brand-700"
       >
         {bar.call}
       </TapLink>

@@ -8,7 +8,7 @@ import type { Messages } from "@/lib/i18n";
 import { MOTION_OK, gsap, useGSAP } from "./motion/gsap";
 import Reveal from "./motion/Reveal";
 import { DURATION, EASE } from "./motion/tokens";
-import { SectionTitle } from "./ui";
+import { Eyebrow, SectionTitle } from "./ui";
 
 const PHOTOS = [
   { id: "17", ar: "4/3" },
@@ -72,9 +72,10 @@ export default function Gallery({ t = ar }: { t?: Messages }) {
 
   return (
     <LazyMotion features={loadLayoutFeatures}>
-      <section ref={section} className="px-5 py-16 lg:px-8 lg:py-28">
+      <section ref={section} className="px-5 py-24 lg:px-8 lg:py-36">
         <div className="mx-auto flex max-w-[1200px] flex-col gap-6 lg:gap-12">
           <Reveal className="flex flex-col gap-2 lg:gap-3">
+            <Eyebrow>{g.eyebrow}</Eyebrow>
             <SectionTitle>{g.title}</SectionTitle>
           </Reveal>
           <Reveal>
@@ -93,7 +94,7 @@ export default function Gallery({ t = ar }: { t?: Messages }) {
                   setOpenId(p.id);
                 }}
                 aria-label={g.openLabel}
-                className="mb-2.5 block w-full cursor-zoom-in break-inside-avoid overflow-hidden rounded-xl focus-visible:ring-[3px] focus-visible:ring-brand-700 focus-visible:outline-none lg:mb-4 lg:rounded-md [[data-h]_&]:mb-0 [[data-h]_&]:h-full [[data-h]_&]:w-auto [[data-h]_&]:shrink-0"
+                className="mb-2.5 block w-full cursor-zoom-in break-inside-avoid overflow-hidden rounded-xl focus-visible:ring-[3px] focus-visible:ring-brand-700 focus-visible:outline-none lg:mb-4 lg:rounded-[1.5rem] [[data-h]_&]:mb-0 [[data-h]_&]:h-full [[data-h]_&]:w-auto [[data-h]_&]:shrink-0"
                 style={{ aspectRatio: p.ar }}
               >
                 <Image
@@ -135,7 +136,7 @@ export default function Gallery({ t = ar }: { t?: Messages }) {
               animate={{ scale: 1 }}
               exit={{ scale: 0.96 }}
               transition={transition}
-              className="relative overflow-hidden rounded-md"
+              className="relative overflow-hidden rounded-[1.5rem]"
             >
               <Image
                 src={open.src}
