@@ -5,6 +5,7 @@ import { useState } from "react";
 import ar from "@/messages/ar.json";
 import { isAr, type Messages } from "@/lib/i18n";
 import { whatsappHref } from "@/lib/site";
+import ThemeToggle from "./ThemeToggle";
 import TapLink from "./motion/TapLink";
 import { CtaIcon } from "./ui";
 
@@ -46,6 +47,7 @@ export default function Header({ t = ar }: { t?: Messages }) {
           ))}
         </nav>
         <div className="flex items-center gap-2">
+          <ThemeToggle />
           <LangSwitch h={h} className="px-3.5 text-sm" />
           <TapLink
             href={whatsappHref}
@@ -66,6 +68,7 @@ export default function Header({ t = ar }: { t?: Messages }) {
           <b className="font-heading text-sm leading-tight font-bold text-balance text-ink-900">{h.mobileName}</b>
         </a>
         <div className="flex shrink-0 items-center gap-2">
+          <ThemeToggle />
           <LangSwitch h={h} className="px-2.5 text-[13px]" />
           <button
             type="button"

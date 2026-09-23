@@ -15,7 +15,9 @@ import type { Messages } from "@/lib/i18n";
 /** Full homepage; `t` picks the language (layout sets lang/dir). */
 export default function Home({ t }: { t: Messages }) {
   return (
-    <div className="overflow-x-clip pb-[84px] lg:pb-0">
+    <div className="home overflow-x-clip pb-[84px] lg:pb-0">
+      {/* Apply saved theme before paint to avoid a flash. */}
+      <script dangerouslySetInnerHTML={{ __html: `try{if(localStorage.getItem("theme")==="coral")document.documentElement.dataset.theme="coral"}catch(e){}` }} />
       <Header t={t} />
       <main>
         <Hero t={t} />

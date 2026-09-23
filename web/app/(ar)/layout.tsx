@@ -40,7 +40,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="ar" dir="rtl" className={fontVars}>
+    <html lang="ar" dir="rtl" className={fontVars} suppressHydrationWarning>
       <body className="grain">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         <MotionProvider dir="rtl">{children}</MotionProvider>

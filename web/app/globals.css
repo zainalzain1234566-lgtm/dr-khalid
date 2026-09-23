@@ -159,3 +159,75 @@ section[id] {
   opacity: 0.035;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
+
+/* Theme B "Coral" (optional, homepage only). Toggled by ThemeToggle via html[data-theme="coral"].
+   Remaps tokens per surface; the default theme above is untouched. */
+[data-theme="coral"] .home {
+  --bg: #dd6461;
+  --ink-900: #fff;
+  --ink-700: #fff;
+  --ink-500: #fff;
+  --line: rgb(255 255 255 / 0.4);
+  --brand-100: #675887;
+  --brand-500: #2f4858;
+  --brand-600: #3a5a6e;
+  --brand-700: #fff;
+  --deep: #2f4858;
+  --color-deep-muted: #fff;
+  background: var(--bg);
+  color: #fff;
+}
+[data-theme="coral"] .home a:hover {
+  color: #ffe3a3;
+}
+/* White cards keep navy text. */
+[data-theme="coral"] .home :is(.bezel-core, .bg-surface, .bg-white\/92) {
+  --ink-900: #2f4858;
+  --ink-700: #2f4858;
+  --ink-500: #2f4858;
+  --line: #ede6e3;
+  color: #2f4858;
+}
+[data-theme="coral"] .home .bezel:not(.bezel-dark) > .bezel-core {
+  background: #fff;
+}
+/* Section palette */
+[data-theme="coral"] .home :is(#services, #doctors, #reviews) {
+  background: #dd6461;
+}
+[data-theme="coral"] .home :is(#cases, #doctors + section, #contact) {
+  background: #415274;
+}
+[data-theme="coral"] .home [data-hero="arch"] {
+  background: #c1597d;
+}
+[data-theme="coral"] #doctors .bg-brand-100 {
+  background: #96588b;
+}
+/* Buttons: navy primary, white outline secondary */
+[data-theme="coral"] .home [data-step-badge] {
+  color: #fff;
+}
+[data-theme="coral"] #lab .border-brand-500 {
+  border-color: #c1597d;
+  color: #fff;
+}
+[data-theme="coral"] .home header img[src*="logo"] {
+  filter: brightness(0) invert(1);
+}
+[data-theme="coral"] .home .ring-brand-500\/25 {
+  background: transparent;
+  --ink-900: #fff;
+  color: #fff;
+  box-shadow: inset 0 0 0 1.5px #fff;
+}
+[data-theme="coral"] .home .ring-brand-500\/25 .bg-brand-100 {
+  background: rgb(255 255 255 / 0.2);
+}
+[data-theme="coral"] .home .bg-surface\/85 {
+  background: rgb(47 72 88 / 0.92);
+}
+[data-theme="coral"] .home :is(img.opacity-5, .logo-mark) {
+  filter: brightness(0) invert(1);
+  opacity: 0.08;
+}
