@@ -10,7 +10,8 @@ import CasesGrid from "./CasesGrid";
 
 export const metadata: Metadata = { title: "حالاتنا قبل وبعد | عيادات الدكتور خالد العطار", alternates: { canonical: "/cases" } };
 
-export default async function CasesPage() {
+export default async function CasesPage({ searchParams }: PageProps<"/cases">) {
+  const { t } = await searchParams;
   const cases = await allCases(ar);
 
   return (
@@ -44,7 +45,7 @@ export default async function CasesPage() {
           </div>
         </section>
 
-        <CasesGrid cases={cases} />
+        <CasesGrid cases={cases} initial={typeof t === "string" ? t : undefined} />
 
         <section className="px-4 pb-12 lg:px-8 lg:pb-24">
           <div className="mx-auto flex max-w-[1200px] flex-col items-center justify-between gap-6 rounded-lg bg-brand-100 px-5 py-8 text-center lg:flex-row lg:px-14 lg:py-12 lg:text-right">

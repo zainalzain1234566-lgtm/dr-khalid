@@ -11,6 +11,7 @@ import { whatsappHref } from "@/lib/site";
 import t from "@/messages/ar.json";
 
 const ALL = "الكل";
+const services = t.services.items.map((s) => s.t);
 const c = t.cases;
 const fill = (s: string, title: string) => s.replace("{title}", title);
 
@@ -32,9 +33,10 @@ const slider = (k: Case, aspect?: string, sizes?: string) => (
   />
 );
 
-export default function CasesGrid({ cases }: { cases: Case[] }) {
-  const tags = [...new Set(cases.map((k) => k.tag))];
-  const [chip, setChip] = useState(ALL);
+// Every service gets a chip (even with no cases yet), so service cards on the home page can deep-link here.
+export default function CasesGrid({ cases, initial }: { cases: Case[]; initial?: string }) {
+  const [chip, setChip] = useState(initial && services.includes(initial) ? initial : ALL);
+  const chips = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState<number | null>(null);
   const [side, setSide] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
@@ -43,6 +45,13 @@ export default function CasesGrid({ cases }: { cases: Case[] }) {
   const featured = chip === ALL && list.length >= 3;
   const m = open == null ? null : list[open];
   const go = (d: number) => setOpen((i) => (i == null ? i : (i + d + list.length) % list.length));
+
+  // Keep the URL shareable and scroll the active chip into view (the row scrolls sideways on mobile).
+  useEffect(() => {
+    const url = chip === ALL ? "/cases" : `/cases?t=${encodeURIComponent(chip)}`;
+    window.history.replaceState(null, "", url);
+    chips.current?.querySelector("[aria-pressed=true]")?.scrollIntoView({ block: "nearest", inline: "center" });
+  }, [chip]);
 
   // Native <dialog> gives us Esc, focus trapping and the backdrop for free.
   useEffect(() => {
@@ -53,18 +62,16 @@ export default function CasesGrid({ cases }: { cases: Case[] }) {
 
   return (
     <>
-      {tags.length > 1 && (
-        <div className="sticky top-[73px] z-20 border-b border-line bg-bg/95 lg:top-0">
-          <div role="group" aria-label="نوع العلاج" className="mx-auto flex max-w-[1200px] gap-2 overflow-x-auto px-4 py-2.5 [scrollbar-width:none] lg:flex-wrap lg:px-8 lg:py-4">
-            {[ALL, ...tags].map((l) => (
-              <button key={l} aria-pressed={chip === l} onClick={() => setChip(l)} className={pill(chip === l)}>
-                {l}
-                <span className="text-xs opacity-80">{l === ALL ? cases.length : cases.filter((k) => k.tag === l).length}</span>
-              </button>
-            ))}
-          </div>
+      <div className="sticky top-[73px] z-20 border-b border-line bg-bg/95 lg:top-0">
+        <div ref={chips} role="group" aria-label="نوع العلاج" className="mx-auto flex max-w-[1200px] gap-2 overflow-x-auto px-4 py-2.5 [scrollbar-width:none] lg:flex-wrap lg:px-8 lg:py-4">
+          {[ALL, ...services].map((l) => (
+            <button key={l} aria-pressed={chip === l} onClick={() => setChip(l)} className={pill(chip === l)}>
+              {l}
+              <span className="text-xs opacity-80">{l === ALL ? cases.length : cases.filter((k) => k.tag === l).length}</span>
+            </button>
+          ))}
         </div>
-      )}
+      </div>
 
       <section className="mx-auto max-w-[1200px] px-4 pt-5 pb-12 lg:px-8 lg:pt-10 lg:pb-20">
         {list.length ? (
