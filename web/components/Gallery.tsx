@@ -7,7 +7,7 @@ import ar from "@/messages/ar.json";
 import type { Messages } from "@/lib/i18n";
 import Reveal from "./motion/Reveal";
 import { DURATION, EASE } from "./motion/tokens";
-import { Eyebrow, SectionTitle } from "./ui";
+import { SectionTitle } from "./ui";
 
 const PHOTOS = [
   { id: "17", ar: "4/3" },
@@ -52,7 +52,6 @@ export default function Gallery({ t = ar }: { t?: Messages }) {
       <section className="px-5 py-16 lg:px-8 lg:py-28">
         <div className="mx-auto flex max-w-[1200px] flex-col gap-6 lg:gap-12">
           <Reveal className="flex flex-col gap-2 lg:gap-3">
-            <Eyebrow>{g.eyebrow}</Eyebrow>
             <SectionTitle>{g.title}</SectionTitle>
           </Reveal>
           <Reveal className="columns-2 gap-2.5 lg:columns-4 lg:gap-4">

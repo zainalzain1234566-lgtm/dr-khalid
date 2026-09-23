@@ -1,19 +1,16 @@
 import { ar, type Messages } from "@/lib/i18n";
 import Reveal from "./motion/Reveal";
 import Stagger, { StaggerItem } from "./motion/Stagger";
-import { Eyebrow, SectionTitle } from "./ui";
+import { SectionTitle } from "./ui";
 
 export default function Services({ t = ar }: { t?: Messages }) {
   const s = t.services;
   return (
     <section id="services" className="bg-brand-50 px-5 py-16 lg:px-8 lg:py-28">
       <div className="mx-auto flex max-w-[1200px] flex-col gap-6 lg:gap-12">
-        <Reveal className="flex items-end justify-between gap-8">
-          <div className="flex flex-col gap-2 lg:gap-3">
-            <Eyebrow>{s.eyebrow}</Eyebrow>
-            <SectionTitle>{s.title}</SectionTitle>
-          </div>
-          <p className="hidden max-w-[420px] text-[17px] leading-[1.7] text-ink-500 lg:block">{s.intro}</p>
+        <Reveal className="flex flex-col gap-3">
+          <SectionTitle>{s.title}</SectionTitle>
+          <p className="hidden max-w-[65ch] text-[17px] leading-[1.7] text-ink-500 lg:block">{s.intro}</p>
         </Reveal>
         <Stagger className="grid grid-cols-2 gap-3 lg:grid-cols-5 lg:gap-5">
           {s.items.map((item) => (

@@ -2,7 +2,7 @@ import Image from "next/image";
 import { ar, type Messages } from "@/lib/i18n";
 import Reveal from "./motion/Reveal";
 import { MAPS_EMBED, MAPS_URL } from "@/lib/site";
-import { Eyebrow, SectionTitle } from "./ui";
+import { SectionTitle } from "./ui";
 
 function Map({ l, className }: { l: Messages["location"]; className: string }) {
   return (
@@ -33,7 +33,6 @@ export default function Location({ t = ar }: { t?: Messages }) {
       <div className="mx-auto flex max-w-[1200px] flex-col gap-[18px] lg:grid lg:grid-cols-[1fr_1.3fr] lg:items-stretch lg:gap-12">
         <Reveal className="flex flex-col gap-[18px] lg:gap-6">
           <div className="flex flex-col gap-[18px] lg:gap-3">
-            <Eyebrow>{l.eyebrow}</Eyebrow>
             <SectionTitle>{l.title}</SectionTitle>
           </div>
           <p className="text-[15px] leading-[1.7] lg:text-[17px]">{l.address}</p>

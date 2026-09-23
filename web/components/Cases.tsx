@@ -3,7 +3,7 @@ import { ar, type Messages } from "@/lib/i18n";
 import Reveal from "./motion/Reveal";
 import Stagger, { StaggerItem } from "./motion/Stagger";
 import BeforeAfterSlider from "./BeforeAfterSlider";
-import { Eyebrow, SectionTitle } from "./ui";
+import { SectionTitle } from "./ui";
 
 const fill = (s: string, title: string) => s.replace("{title}", title);
 
@@ -26,7 +26,6 @@ export default async function Cases({ t = ar }: { t?: Messages }) {
       <div className="mx-auto flex max-w-[1200px] flex-col gap-6 lg:gap-12">
         <Reveal className="flex items-end justify-between">
           <div className="flex flex-col gap-2 lg:gap-3">
-            <Eyebrow>{c.eyebrow}</Eyebrow>
             <SectionTitle>{c.title}</SectionTitle>
           </div>
           {/* TODO: point to /cases once that page exists. */}

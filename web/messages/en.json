@@ -44,7 +44,7 @@
   "services": {
     "eyebrow": "Our services",
     "title": "Everything your smile needs, in one place",
-    "intro": "From 3D diagnosis to fitting from our own lab — one treatment journey, one team.",
+    "intro": "From 3D diagnosis to fitting from our own lab: one treatment journey, one team.",
     "items": [
       { "n": "01", "t": "Orthodontics", "d": "Fixed braces to correct the bite and align teeth." },
       { "n": "02", "t": "Dental implants", "d": "Fixed implants to replace missing teeth, up to full-arch." },
@@ -62,11 +62,11 @@
     "eyebrow": "The clinic lab",
     "title": "An in-house dental lab, from design to fitting",
     "titleShort": "An in-house dental lab",
-    "body": "Crowns, bridges and smile makeovers are made in our lab under the doctor's direct supervision — no middlemen, no waiting on outside labs.",
-    "bodyShort": "Restorations are made in our lab under the doctor's direct supervision — no middlemen, no waiting.",
+    "body": "Crowns, bridges and smile makeovers are made in our lab under the doctor's direct supervision. No middlemen, no waiting on outside labs.",
+    "bodyShort": "Restorations are made in our lab under the doctor's direct supervision. No middlemen, no waiting.",
     "photoAlt": "The clinic's in-house digital dental lab",
     "benefits": [
-      { "n": "1", "t": "Faster delivery", "d": "No waiting on an outside lab — restorations are made right here." },
+      { "n": "1", "t": "Faster delivery", "d": "No waiting on an outside lab. Restorations are made right here." },
       { "n": "2", "t": "Precise fit", "d": "Doctor and technician adjust together, the same day." },
       { "n": "3", "t": "Full quality control", "d": "Every step, design to fitting, supervised by the doctor." }
     ]

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { ar, type Messages } from "@/lib/i18n";
 import ClipReveal from "./motion/ClipReveal";
+import ScrubPhoto from "./motion/ScrubPhoto";
 import Reveal from "./motion/Reveal";
 import Stagger, { StaggerItem } from "./motion/Stagger";
 
@@ -53,7 +54,7 @@ export default function Lab({ t = ar }: { t?: Messages }) {
             ))}
           </Stagger>
         </div>
-        <LabPhoto alt={l.photoAlt} className="hidden h-[600px] lg:block" />
+        <ScrubPhoto src="/clinic/06.webp" alt={l.photoAlt} className="hidden h-[600px] rounded-lg lg:block" />
       </div>
     </section>
   );
