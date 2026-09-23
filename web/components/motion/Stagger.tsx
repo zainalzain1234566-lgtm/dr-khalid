@@ -18,7 +18,8 @@ export default function Stagger({ children, className, delay = 0 }: { children: 
     gsap.matchMedia().add(MOTION_OK, () => {
       gsap
         .timeline({ scrollTrigger: onceInView(root) })
-        .from(items, { autoAlpha: 0, y: RISE, stagger: 0.08 }, delay);
+        // opacity, not autoAlpha: items must stay clickable while still fading in.
+        .from(items, { opacity: 0, y: RISE, stagger: 0.08 }, delay);
     });
   });
 

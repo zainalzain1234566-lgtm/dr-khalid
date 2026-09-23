@@ -10,7 +10,7 @@ export default function Reveal({ children, className, delay = 0 }: { children: R
 
   useGSAP(() => {
     gsap.matchMedia().add(MOTION_OK, () => {
-      gsap.from(ref.current, { autoAlpha: 0, y: RISE, delay, scrollTrigger: onceInView(ref.current!) });
+      gsap.from(ref.current, { opacity: 0, y: RISE, delay, scrollTrigger: onceInView(ref.current!) });
     });
   });
 
