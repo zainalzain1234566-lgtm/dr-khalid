@@ -80,7 +80,7 @@ export default function Gallery({ t = ar }: { t?: Messages }) {
           <Reveal>
             <div
               ref={track}
-              className="columns-2 gap-2.5 lg:columns-4 lg:gap-4 data-h:flex data-h:h-[62vh] data-h:columns-auto"
+              className="columns-2 gap-2.5 lg:columns-4 lg:gap-4 data-h:flex data-h:h-[62vh] data-h:columns-auto data-h:will-change-transform"
             >
             {PHOTOS.map((p) => (
               <m.button
