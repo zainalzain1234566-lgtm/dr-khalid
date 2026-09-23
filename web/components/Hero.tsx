@@ -1,17 +1,12 @@
 import Image from "next/image";
 import t from "@/messages/ar.json";
 import { phoneHref, whatsappHref } from "@/lib/site";
-import CountUp from "./motion/CountUp";
 import { HeroArch, HeroCard } from "./motion/HeroMotion";
 import Stagger, { StaggerItem } from "./motion/Stagger";
 import TapLink from "./motion/TapLink";
 import { WhatsAppIcon } from "./ui";
 
 const h = t.hero;
-
-function BadgeTitle({ b }: { b: (typeof h.badges)[number] }) {
-  return b.count ? <CountUp {...b.count} /> : <>{b.title}</>;
-}
 
 export default function Hero() {
   return (
@@ -76,7 +71,7 @@ export default function Hero() {
         </StaggerItem>
 
         {/* Trust badges — desktop */}
-        <StaggerItem className="mt-3 hidden max-w-[600px] grid-cols-3 gap-4 lg:grid">
+        <StaggerItem className="mt-3 hidden max-w-[720px] grid-cols-4 gap-4 lg:grid">
           {h.badges.map((b) => (
             <div key={b.icon} className="flex items-center gap-3">
               <span
@@ -87,7 +82,7 @@ export default function Hero() {
               </span>
               <div className="flex flex-col">
                 <b className="font-heading text-[15px] font-semibold text-ink-900">
-                  <BadgeTitle b={b} />
+                  {b.title}
                 </b>
                 <span className="text-[13px] text-ink-500">{b.sub}</span>
               </div>
@@ -96,7 +91,7 @@ export default function Hero() {
         </StaggerItem>
 
         {/* Trust badges — mobile */}
-        <StaggerItem className="grid grid-cols-3 gap-2 lg:hidden">
+        <StaggerItem className="grid grid-cols-2 gap-2 lg:hidden">
           {h.badges.map((b) => (
             <div
               key={b.icon}

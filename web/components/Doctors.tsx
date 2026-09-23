@@ -75,6 +75,7 @@ export default function Doctors() {
             <StaggerItem key={doc.name} className="flex flex-col gap-2">
               <Portrait src={doc.img} alt={doc.name} frame="h-[220px] rounded-b-[20px]" sizes="240px" />
               <b className="text-center font-heading text-[15px] font-semibold text-ink-900">{doc.name}</b>
+              <span className="-mt-1 text-center text-xs text-ink-500">{doc.role}</span>
             </StaggerItem>
           ))}
         </Stagger>

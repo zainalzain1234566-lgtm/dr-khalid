@@ -16,7 +16,7 @@ export default function Services() {
           </div>
           <p className="hidden max-w-[420px] text-[17px] leading-[1.7] text-ink-500 lg:block">{s.intro}</p>
         </Reveal>
-        <Stagger className="grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-5">
+        <Stagger className="grid grid-cols-2 gap-3 lg:grid-cols-5 lg:gap-5">
           {s.items.map((item) => (
             <StaggerItem
               key={item.n}

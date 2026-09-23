@@ -54,13 +54,13 @@ export default function Header() {
 
       {/* Mobile */}
       <header className="sticky top-0 z-30 border-b border-line bg-bg/95 lg:hidden">
-        <div className="flex items-center justify-between px-5 py-3.5">
-          <a href="#top" className="flex items-center gap-2.5">
+        <div className="flex items-center justify-between gap-2 px-4 py-3.5">
+          <a href="#top" className="flex min-w-0 items-center gap-2">
             <Image src="/logo.webp" alt={h.logoAlt} width={41} height={40} className="h-10 w-auto" priority />
-            <b className="font-heading text-[15px] font-bold text-ink-900">{h.mobileName}</b>
+            <b className="font-heading text-sm font-bold whitespace-nowrap text-ink-900">{h.mobileName}</b>
           </a>
           <div className="flex items-center gap-2">
-            <LangSwitch className="px-2.5 py-1.5 text-[13px]" />
+            <LangSwitch className="px-2.5 py-1.5 text-[13px] whitespace-nowrap" />
             <button
               type="button"
               onClick={() => setOpen((o) => !o)}
