@@ -1,10 +1,8 @@
 import Image from "next/image";
-import t from "@/messages/ar.json";
+import { ar, type Messages } from "@/lib/i18n";
 import Reveal from "./motion/Reveal";
 import Stagger, { StaggerItem } from "./motion/Stagger";
 import { Eyebrow, SectionTitle } from "./ui";
-
-const d = t.doctors;
 
 /** Cutout on the shared arch backdrop; the head breaks out of the arch's top edge. */
 function Portrait({ src, alt, frame, sizes }: { src: string; alt: string; frame: string; sizes: string }) {
@@ -23,7 +21,8 @@ function Portrait({ src, alt, frame, sizes }: { src: string; alt: string; frame:
   );
 }
 
-export default function Doctors() {
+export default function Doctors({ t = ar }: { t?: Messages }) {
+  const d = t.doctors;
   return (
     <section id="doctors" className="relative overflow-hidden bg-brand-50 px-5 py-16 lg:px-8 lg:py-28">
       <Image

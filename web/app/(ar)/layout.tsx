@@ -1,28 +1,16 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Sans_Arabic, Readex_Pro } from "next/font/google";
 import MotionProvider from "@/components/motion/MotionProvider";
 import t from "@/messages/ar.json";
+import { fontVars } from "@/lib/fonts";
 import { INSTAGRAM_URL, MAPS_URL, SITE_URL } from "@/lib/site";
-import "./globals.css";
-
-const readex = Readex_Pro({
-  variable: "--font-readex",
-  subsets: ["arabic", "latin"],
-  weight: ["500", "600", "700"],
-});
-
-const plex = IBM_Plex_Sans_Arabic({
-  variable: "--font-plex",
-  subsets: ["arabic", "latin"],
-  weight: ["400", "500", "600"],
-});
+import "../globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: t.meta.title,
   description: t.meta.description,
   keywords: ["طبيب أسنان البصرة", "زراعة الأسنان البصرة", "تقويم الأسنان البصرة", "ابتسامة المشاهير", "خالد العطار", "عيادة أسنان الجنينة"],
-  alternates: { canonical: "/" },
+  alternates: { canonical: "/", languages: { ar: "/", en: "/en" } },
   icons: { icon: "/logo.webp" },
   openGraph: {
     type: "website",
@@ -52,7 +40,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="ar" dir="rtl" className={`${readex.variable} ${plex.variable} antialiased`}>
+    <html lang="ar" dir="rtl" className={fontVars}>
       <body>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         <MotionProvider dir="rtl">{children}</MotionProvider>

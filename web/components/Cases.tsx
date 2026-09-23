@@ -1,15 +1,14 @@
 import { list } from "@vercel/blob";
-import t from "@/messages/ar.json";
+import { ar, type Messages } from "@/lib/i18n";
 import Reveal from "./motion/Reveal";
 import Stagger, { StaggerItem } from "./motion/Stagger";
 import BeforeAfterSlider from "./BeforeAfterSlider";
 import { Eyebrow, SectionTitle } from "./ui";
 
-const c = t.cases;
 const fill = (s: string, title: string) => s.replace("{title}", title);
 
 // Cases uploaded by the owner via the Telegram bot (cases/<service idx>/{before,after}.webp); shown only when both exist.
-async function uploaded() {
+async function uploaded(t: Messages) {
   const { blobs } = await list({ prefix: "cases/" }).catch(() => ({ blobs: [] }));
   const url = (i: number, side: string) => blobs.find((b) => b.pathname === `cases/${i}/${side}.webp`)?.url;
   return t.services.items.flatMap((s, i) => {
@@ -19,8 +18,9 @@ async function uploaded() {
   });
 }
 
-export default async function Cases() {
-  const items = [...(await uploaded()), ...c.items.filter((i) => i.before && i.after)];
+export default async function Cases({ t = ar }: { t?: Messages }) {
+  const c = t.cases;
+  const items = [...(await uploaded(t)), ...c.items.filter((i) => i.before && i.after)];
   return (
     <section id="cases" className="px-5 py-16 lg:px-8 lg:py-28">
       <div className="mx-auto flex max-w-[1200px] flex-col gap-6 lg:gap-12">

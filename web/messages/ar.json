@@ -9,6 +9,8 @@
     "clinicTagline": "لتقويم وزراعة الأسنان",
     "mobileName": "عيادات الدكتور خالد العطار",
     "langSwitch": "EN | ع",
+    "langHref": "/en",
+    "langCode": "en",
     "book": "احجز موعد",
     "menuOpen": "فتح القائمة",
     "menuClose": "إغلاق القائمة",
@@ -22,7 +24,6 @@
     ]
   },
   "hero": {
-    "location": "البصرة · الجنينة، مقابل جامع الگرناوي",
     "titleBefore": "ابتسامة تليق بك، ",
     "titleAccent": "بتقويم وزراعة",
     "titleAfter": " بأيدٍ متخصصة",
@@ -124,13 +125,18 @@
     "eyebrow": "آراء المراجعين",
     "write": "اكتب تقييمك",
     "seeAll": "عرض الكل",
-    "starsLabel": "5 من 5 نجوم"
+    "starsLabel": "5 من 5 نجوم",
+    "itemStars": "{n} من 5 نجوم",
+    "count": "من {n} تقييم",
+    "countNone": "لا توجد تقييمات بعد",
+    "anonymous": "مراجع"
   },
   "location": {
     "eyebrow": "الموقع وأوقات العمل",
     "title": "زورونا في الجنينة",
     "address": "البصرة، الجنينة، مقابل جامع الگرناوي، مجمع الأندلس الطبي",
     "buildingAlt": "واجهة المبنى",
+    "openMaps": "فتح في خرائط Google",
     "hours": [
       { "day": "السبت – الخميس", "time": "3:00 PM – 8:00 PM" },
       { "day": "الجمعة", "time": "[للتأكيد]", "pending": true }

@@ -2,22 +2,26 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import t from "@/messages/ar.json";
+import ar from "@/messages/ar.json";
+import type { Messages } from "@/lib/i18n";
 import { whatsappHref } from "@/lib/site";
 import TapLink from "./motion/TapLink";
 
-const h = t.header;
-
-function LangSwitch({ className = "" }: { className?: string }) {
-  // TODO: link to /en once the English (LTR) version is designed.
+function LangSwitch({ h, className = "" }: { h: Messages["header"]; className?: string }) {
   return (
-    <span dir="ltr" className={`rounded-full border border-line font-semibold text-ink-700 ${className}`}>
+    <a
+      href={h.langHref}
+      lang={h.langCode}
+      dir="ltr"
+      className={`rounded-full border border-line font-semibold whitespace-nowrap text-ink-700 hover:text-brand-700 ${className}`}
+    >
       {h.langSwitch}
-    </span>
+    </a>
   );
 }
 
-export default function Header() {
+export default function Header({ t = ar }: { t?: Messages }) {
+  const h = t.header;
   const [open, setOpen] = useState(false);
 
   return (
@@ -39,7 +43,7 @@ export default function Header() {
           ))}
         </nav>
         <div className="flex items-center gap-3">
-          <LangSwitch className="px-3.5 py-2 text-sm" />
+          <LangSwitch h={h} className="px-3.5 py-2 text-sm" />
           <TapLink
             lift
             href={whatsappHref}
@@ -57,10 +61,10 @@ export default function Header() {
         <div className="flex items-center justify-between gap-2 px-4 py-3.5">
           <a href="#top" className="flex min-w-0 items-center gap-2">
             <Image src="/logo.webp" alt={h.logoAlt} width={41} height={40} className="h-10 w-auto" priority />
-            <b className="font-heading text-sm font-bold whitespace-nowrap text-ink-900">{h.mobileName}</b>
+            <b className="font-heading text-sm leading-tight font-bold text-balance text-ink-900">{h.mobileName}</b>
           </a>
-          <div className="flex items-center gap-2">
-            <LangSwitch className="px-2.5 py-1.5 text-[13px] whitespace-nowrap" />
+          <div className="flex shrink-0 items-center gap-2">
+            <LangSwitch h={h} className="px-2.5 py-1.5 text-[13px]" />
             <button
               type="button"
               onClick={() => setOpen((o) => !o)}

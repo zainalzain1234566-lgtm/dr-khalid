@@ -1,11 +1,10 @@
-import t from "@/messages/ar.json";
+import { ar, type Messages } from "@/lib/i18n";
 import Reveal from "./motion/Reveal";
 import Stagger, { StaggerItem } from "./motion/Stagger";
 import { Eyebrow, SectionTitle } from "./ui";
 
-const s = t.services;
-
-export default function Services() {
+export default function Services({ t = ar }: { t?: Messages }) {
+  const s = t.services;
   return (
     <section id="services" className="bg-brand-50 px-5 py-16 lg:px-8 lg:py-28">
       <div className="mx-auto flex max-w-[1200px] flex-col gap-6 lg:gap-12">

@@ -1,12 +1,10 @@
 import Image from "next/image";
-import t from "@/messages/ar.json";
+import { ar, type Messages } from "@/lib/i18n";
 import ClipReveal from "./motion/ClipReveal";
 import Reveal from "./motion/Reveal";
 import Stagger, { StaggerItem } from "./motion/Stagger";
 
-const l = t.lab;
-
-function LabPhoto({ className }: { className: string }) {
+function LabPhoto({ label, className }: { label: string; className: string }) {
   // TODO(clinic): swap for the real lab photo once supplied.
   return (
     <ClipReveal className={className}>
@@ -14,13 +12,13 @@ function LabPhoto({ className }: { className: string }) {
         dir="ltr"
         className="placeholder-stripes-deep flex size-full items-center justify-center rounded-lg font-mono font-medium text-deep-faint"
       >
-        {l.photoPlaceholder}
+        {label}
       </div>
     </ClipReveal>
   );
 }
 
-function Benefit({ b }: { b: (typeof l.benefits)[number] }) {
+function Benefit({ b }: { b: Messages["lab"]["benefits"][number] }) {
   return (
     <StaggerItem className="flex items-start gap-3.5 border-b border-white/12 py-3.5 lg:gap-5 lg:py-[22px]">
       <span className="flex size-10 flex-none items-center justify-center rounded-full border-[1.5px] border-brand-500 font-heading text-sm font-semibold text-brand-500 lg:size-11 lg:text-[15px]">
@@ -34,7 +32,8 @@ function Benefit({ b }: { b: (typeof l.benefits)[number] }) {
   );
 }
 
-export default function Lab() {
+export default function Lab({ t = ar }: { t?: Messages }) {
+  const l = t.lab;
   return (
     <section id="lab" className="bg-deep px-5 py-16 text-white lg:px-8 lg:py-28">
       <div className="mx-auto flex max-w-[1200px] flex-col gap-5 lg:grid lg:grid-cols-2 lg:items-center lg:gap-[72px]">
@@ -53,14 +52,14 @@ export default function Lab() {
               <span className="hidden lg:inline">{l.body}</span>
             </p>
           </Reveal>
-          <LabPhoto className="h-60 text-xs lg:hidden" />
+          <LabPhoto label={l.photoPlaceholder} className="h-60 text-xs lg:hidden" />
           <Stagger className="flex flex-col gap-5 lg:gap-0 lg:border-t lg:border-white/12">
             {l.benefits.map((b) => (
               <Benefit key={b.n} b={b} />
             ))}
           </Stagger>
         </div>
-        <LabPhoto className="hidden h-[600px] text-sm lg:block" />
+        <LabPhoto label={l.photoPlaceholder} className="hidden h-[600px] text-sm lg:block" />
       </div>
     </section>
   );

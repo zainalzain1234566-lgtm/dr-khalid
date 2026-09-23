@@ -2,16 +2,16 @@
 
 import { m } from "motion/react";
 import { useEffect, useState } from "react";
-import t from "@/messages/ar.json";
+import ar from "@/messages/ar.json";
+import type { Messages } from "@/lib/i18n";
 import { phoneHref, whatsappHref } from "@/lib/site";
 import TapLink from "./motion/TapLink";
 import { DURATION, EASE } from "./motion/tokens";
 import { WhatsAppIcon } from "./ui";
 
-const bar = t.mobileBar;
-
 /** Sticky WhatsApp + Call bar on mobile; slides up once the hero has scrolled out of view. */
-export default function MobileBar() {
+export default function MobileBar({ t = ar }: { t?: Messages }) {
+  const bar = t.mobileBar;
   const [shown, setShown] = useState(false);
 
   useEffect(() => {

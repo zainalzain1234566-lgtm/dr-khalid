@@ -1,0 +1,160 @@
+{
+  "meta": {
+    "title": "Dr. Khalid Al-Attar Orthodontic & Dental Implant Clinics · Basra",
+    "description": "Dental implants, orthodontics and smile makeovers, with 3D imaging and an in-house dental lab. Al-Jinaina, Basra."
+  },
+  "header": {
+    "logoAlt": "Clinic logo",
+    "clinicName": "Dr. Khalid Al-Attar Clinics",
+    "clinicTagline": "Orthodontics & Dental Implants",
+    "mobileName": "Dr. Khalid Al-Attar Clinics",
+    "langSwitch": "ع | EN",
+    "langHref": "/",
+    "langCode": "ar",
+    "book": "Book a visit",
+    "menuOpen": "Open menu",
+    "menuClose": "Close menu",
+    "nav": [
+      { "href": "/en#services", "label": "Services" },
+      { "href": "/en#lab", "label": "Lab" },
+      { "href": "/en#cases", "label": "Cases" },
+      { "href": "/en#doctors", "label": "Doctors" },
+      { "href": "/en#reviews", "label": "Reviews" },
+      { "href": "/en#contact", "label": "Contact" }
+    ]
+  },
+  "hero": {
+    "titleBefore": "A smile that suits you, ",
+    "titleAccent": "orthodontics & implants",
+    "titleAfter": " by specialists",
+    "subtitle": "Dental implants, orthodontics and smile makeovers, with 3D imaging and an in-house dental lab for more precise, faster restorations.",
+    "subtitleShort": "Implants, orthodontics and smile makeovers, with 3D imaging and an in-house dental lab.",
+    "whatsapp": "Book on WhatsApp",
+    "call": "Call us",
+    "doctorAlt": "Dr. Khalid Jamal Al-Attar",
+    "cardName": "Dr. Khalid Jamal Al-Attar · B.D.S",
+    "cardRole": "Dentist · Clinic founder",
+    "badges": [
+      { "icon": "LAB", "title": "In-house lab", "sub": "Inside the clinic", "mobileTitle": "In-house lab" },
+      { "icon": "16", "title": "16 years", "sub": "experience", "mobileTitle": "16 years experience" },
+      { "icon": "20K", "title": "20K+", "sub": "patients", "mobileTitle": "20K+ patients" },
+      { "icon": "10K", "title": "10K+", "sub": "advanced specialist cases", "mobileTitle": "10K+ specialist cases" }
+    ]
+  },
+  "services": {
+    "eyebrow": "Our services",
+    "title": "Everything your smile needs, in one place",
+    "intro": "From 3D diagnosis to fitting from our own lab — one treatment journey, one team.",
+    "items": [
+      { "n": "01", "t": "Orthodontics", "d": "Fixed braces to correct the bite and align teeth." },
+      { "n": "02", "t": "Dental implants", "d": "Fixed implants to replace missing teeth, up to full-arch." },
+      { "n": "03", "t": "Root canal treatment", "d": "Nerve treatment and canal filling to save the natural tooth." },
+      { "n": "04", "t": "Cosmetic fillings", "d": "Tooth-coloured fillings that restore shape and function." },
+      { "n": "05", "t": "Veneers & smile design", "d": "Veneers, crowns and smile makeovers with a natural look." },
+      { "n": "06", "t": "Al-Attar Zirconia Lab", "d": "Zirconia crowns and bridges made inside the clinic." },
+      { "n": "07", "t": "Kids dentistry & prevention", "d": "Gentle care and early prevention for children's teeth." },
+      { "n": "08", "t": "3D & standard dental X-ray", "d": "3D and standard imaging for more accurate diagnosis." },
+      { "n": "09", "t": "Clear aligners", "d": "Near-invisible, removable clear aligners." },
+      { "n": "10", "t": "GBT teeth cleaning", "d": "Gentle, precise cleaning with AIRFLOW." }
+    ]
+  },
+  "lab": {
+    "eyebrow": "The clinic lab",
+    "title": "An in-house dental lab, from design to fitting",
+    "titleShort": "An in-house dental lab",
+    "body": "Crowns, bridges and smile makeovers are made in our lab under the doctor's direct supervision — no middlemen, no waiting on outside labs.",
+    "bodyShort": "Restorations are made in our lab under the doctor's direct supervision — no middlemen, no waiting.",
+    "photoPlaceholder": "[ lab photo — pending ]",
+    "benefits": [
+      { "n": "1", "t": "Faster delivery", "d": "No waiting on an outside lab — restorations are made right here." },
+      { "n": "2", "t": "Precise fit", "d": "Doctor and technician adjust together, the same day." },
+      { "n": "3", "t": "Full quality control", "d": "Every step, design to fitting, supervised by the doctor." }
+    ]
+  },
+  "cases": {
+    "eyebrow": "Before & after",
+    "title": "Real results from our patients",
+    "seeAll": "See all cases →",
+    "before": "Before",
+    "after": "After",
+    "sliderLabel": "Before and after comparison: {title}",
+    "beforeAlt": "{title} before treatment",
+    "afterAlt": "{title} after treatment",
+    "items": [
+      {
+        "t": "Full-arch implants",
+        "tag": "Dental implants",
+        "before": "/cases/full-jaw-implant/before.webp",
+        "after": "/cases/full-jaw-implant/after.webp"
+      },
+      { "t": "Smile makeover", "tag": "E-MAX", "before": null, "after": null },
+      { "t": "Clear aligners", "tag": "Orthodontics", "before": null, "after": null }
+    ]
+  },
+  "doctors": {
+    "eyebrow": "Our doctors",
+    "title": "One team, led by Dr. Khalid Al-Attar",
+    "titleShort": "One team, led by Dr. Khalid",
+    "lead": {
+      "name": "Dr. Khalid Jamal Al-Attar",
+      "role": "Dentist · Head of Fillings & Veneers",
+      "roleShort": "Dentist · Head of Fillings & Veneers",
+      "img": "/doctors/dr-khalid.webp"
+    },
+    "team": [
+      {
+        "name": "Dr. Karrar Abdulhadi",
+        "role": "Dentist · Head of Orthodontics",
+        "img": "/doctors/dr-karrar.webp"
+      },
+      {
+        "name": "Dr. Ali Al-Aboudi",
+        "role": "Dentist · Head of Dental Implants",
+        "img": "/doctors/dr-ali.webp"
+      }
+    ]
+  },
+  "gallery": {
+    "eyebrow": "The clinic",
+    "title": "A calm space designed for your comfort",
+    "photoAlt": "Clinic photo",
+    "close": "Close",
+    "openLabel": "Enlarge photo"
+  },
+  "reviews": {
+    "eyebrow": "Patient reviews",
+    "write": "Write a review",
+    "seeAll": "See all reviews",
+    "starsLabel": "5 out of 5 stars",
+    "itemStars": "{n} out of 5 stars",
+    "count": "Average rating · {n} reviews",
+    "countNone": "No reviews yet",
+    "anonymous": "Patient"
+  },
+  "location": {
+    "eyebrow": "Location & hours",
+    "title": "Visit us in Al-Jinaina",
+    "address": "Al-Andalus Medical Complex, opposite Al-Garnawi Mosque, Al-Jinaina, Basra",
+    "buildingAlt": "Building entrance",
+    "openMaps": "Open in Google Maps",
+    "hours": [
+      { "day": "Saturday – Thursday", "time": "3:00 PM – 8:00 PM" },
+      { "day": "Friday", "time": "[to confirm]", "pending": true }
+    ]
+  },
+  "footer": {
+    "name": "Dr. Khalid Al-Attar Orthodontic & Dental Implant Clinics",
+    "contactTitle": "Contact",
+    "whatsapp": "WhatsApp",
+    "instagramTitle": "Instagram",
+    "hoursTitle": "Hours",
+    "hours": "3:00 PM – 8:00 PM",
+    "area": "Al-Jinaina, Basra",
+    "copyright": "© 2026 Dr. Khalid Al-Attar Clinics. All rights reserved.",
+    "copyrightShort": "© 2026 All rights reserved"
+  },
+  "mobileBar": {
+    "whatsapp": "WhatsApp",
+    "call": "Call"
+  }
+}

@@ -1,14 +1,13 @@
 import Image from "next/image";
-import t from "@/messages/ar.json";
+import { ar, type Messages } from "@/lib/i18n";
 import { phoneHref, whatsappHref } from "@/lib/site";
 import { HeroArch, HeroCard } from "./motion/HeroMotion";
 import Stagger, { StaggerItem } from "./motion/Stagger";
 import TapLink from "./motion/TapLink";
 import { WhatsAppIcon } from "./ui";
 
-const h = t.hero;
-
-export default function Hero() {
+export default function Hero({ t = ar }: { t?: Messages }) {
+  const h = t.hero;
   return (
     <section
       id="top"
@@ -31,11 +30,6 @@ export default function Hero() {
       />
 
       <Stagger onLoad delay={0.1} className="relative flex flex-col gap-[22px] lg:gap-7">
-        <StaggerItem className="hidden self-start lg:block">
-          <span className="inline-block rounded-full bg-brand-100 px-4 py-2 text-sm font-semibold text-brand-700">
-            {h.location}
-          </span>
-        </StaggerItem>
         <StaggerItem>
           <h1 className="font-heading text-[34px] leading-[1.2] font-bold text-balance text-ink-900 lg:text-[56px] lg:leading-[1.15]">
             {h.titleBefore}

@@ -3,12 +3,11 @@
 import Image from "next/image";
 import { AnimatePresence, LazyMotion, m } from "motion/react";
 import { useEffect, useRef, useState } from "react";
-import t from "@/messages/ar.json";
+import ar from "@/messages/ar.json";
+import type { Messages } from "@/lib/i18n";
 import Reveal from "./motion/Reveal";
 import { DURATION, EASE } from "./motion/tokens";
 import { Eyebrow, SectionTitle } from "./ui";
-
-const g = t.gallery;
 
 const PHOTOS = [
   { id: "17", ar: "4/3" },
@@ -27,7 +26,8 @@ const PHOTOS = [
 const loadLayoutFeatures = () => import("./motion/features-max").then((mod) => mod.default);
 const transition = { duration: DURATION.base, ease: EASE };
 
-export default function Gallery() {
+export default function Gallery({ t = ar }: { t?: Messages }) {
+  const g = t.gallery;
   const [openId, setOpenId] = useState<string | null>(null);
   const open = PHOTOS.find((p) => p.id === openId);
   const closeBtn = useRef<HTMLButtonElement>(null);
