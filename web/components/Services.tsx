@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ar, type Messages } from "@/lib/i18n";
+import LinkPending from "./motion/LinkPending";
 import PinSteps from "./motion/PinSteps";
 import Reveal from "./motion/Reveal";
 import Stagger, { StaggerItem } from "./motion/Stagger";
@@ -23,7 +24,7 @@ export default function Services({ t = ar }: { t?: Messages }) {
             >
               <Link
                 href={t === ar ? `/cases?t=${encodeURIComponent(item.t)}` : "/en#cases"}
-                className="bezel-core flex h-full flex-col gap-2.5 p-4 lg:gap-4 lg:p-6"
+                className="bezel-core relative flex h-full flex-col gap-2.5 p-4 lg:gap-4 lg:p-6"
               >
               <span
                 data-step-badge
@@ -34,6 +35,7 @@ export default function Services({ t = ar }: { t?: Messages }) {
               </span>
               <h3 className="font-heading text-base leading-[1.35] font-semibold text-ink-900 lg:text-[21px]">{item.t}</h3>
               <p className="text-[13px] leading-[1.6] text-ink-500 lg:text-[15px] lg:leading-[1.7]">{item.d}</p>
+              <LinkPending />
               </Link>
             </StaggerItem>
           ))}
