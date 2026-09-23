@@ -1,45 +1,38 @@
 "use client";
 
-import { m, type HTMLMotionProps } from "motion/react";
-import type { ReactNode } from "react";
-import { DURATION, EASE, VIEWPORT, itemVariants } from "./tokens";
+import { useRef, type HTMLAttributes, type ReactNode } from "react";
+import { MOTION_OK, gsap, onceInView, useGSAP } from "./gsap";
+import { RISE } from "./tokens";
 
-/**
- * Staggers its <StaggerItem> children 0.08s apart.
- * `onLoad` plays on mount (above-the-fold content); otherwise on first scroll into view.
- */
-export default function Stagger({
-  children,
-  className,
-  delay = 0,
-  onLoad = false,
-}: {
-  children: ReactNode;
-  className?: string;
-  delay?: number;
-  onLoad?: boolean;
-}) {
-  const trigger = onLoad ? { animate: "show" } : { whileInView: "show", viewport: VIEWPORT };
+/** Staggers its <StaggerItem> descendants 0.08s apart in one timeline, on first scroll into view. */
+export default function Stagger({ children, className, delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    const root = ref.current!;
+    // Skip items owned by a nested <Stagger>.
+    const items = gsap.utils
+      .toArray<HTMLElement>("[data-stagger-item]", root)
+      .filter((el) => el.closest("[data-stagger]") === root);
+
+    gsap.matchMedia().add(MOTION_OK, () => {
+      gsap
+        .timeline({ scrollTrigger: onceInView(root) })
+        .from(items, { autoAlpha: 0, y: RISE, stagger: 0.08 }, delay);
+    });
+  });
+
   return (
-    <m.div
-      className={className}
-      initial="hidden"
-      {...trigger}
-      variants={{
-        hidden: {},
-        show: { transition: { staggerChildren: 0.08, delayChildren: delay } },
-      }}
-    >
+    <div ref={ref} data-stagger className={className}>
       {children}
-    </m.div>
+    </div>
   );
 }
 
-export function StaggerItem({ children, ...props }: HTMLMotionProps<"div"> & { children: ReactNode }) {
+export function StaggerItem({ children, ...props }: HTMLAttributes<HTMLDivElement> & { children: ReactNode }) {
   return (
-    // `transition` covers hover/tap gestures; the reveal uses the variant's own transition.
-    <m.div variants={itemVariants} transition={{ duration: DURATION.fast, ease: EASE }} {...props}>
+    <div data-stagger-item {...props}>
       {children}
-    </m.div>
+    </div>
   );
 }

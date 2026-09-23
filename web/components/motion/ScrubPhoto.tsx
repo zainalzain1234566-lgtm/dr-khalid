@@ -2,11 +2,7 @@
 
 import Image from "next/image";
 import { useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
-
-gsap.registerPlugin(ScrollTrigger, useGSAP);
+import { MOTION_OK, gsap, useGSAP } from "./gsap";
 
 /**
  * GSAP island (no Motion inside): the photo's frame opens from the inline-start edge
@@ -19,7 +15,7 @@ export default function ScrubPhoto({ src, alt, className }: { src: string; alt: 
   useGSAP(
     () => {
       const rtl = document.documentElement.dir === "rtl";
-      gsap.matchMedia().add("(prefers-reduced-motion: no-preference)", () => {
+      gsap.matchMedia().add(MOTION_OK, () => {
         gsap.from(frame.current, {
           clipPath: rtl ? "inset(0 0 0 100%)" : "inset(0 100% 0 0)",
           duration: 0.9,

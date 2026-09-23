@@ -1,34 +1,37 @@
 "use client";
 
-import { m } from "motion/react";
-import type { ReactNode } from "react";
+import { useRef, type ReactNode } from "react";
+import { MOTION_OK, gsap, useGSAP } from "./gsap";
 import { useDir } from "./MotionProvider";
-import { DURATION, EASE } from "./tokens";
+import { DURATION, RISE } from "./tokens";
 
-/** Soft arch behind Dr. Khalid: settles from 0.9 to 1 on load. */
-export function HeroArch({ className }: { className: string }) {
-  return (
-    <m.div
-      className={className}
-      style={{ transformOrigin: "50% 100%" }}
-      initial={{ scale: 0.9 }}
-      animate={{ scale: 1 }}
-      transition={{ duration: DURATION.slow, ease: EASE }}
-    />
-  );
-}
-
-/** Floating name card: slides in from the inline-start side after 0.4s. */
-export function HeroCard({ className, children }: { className: string; children: ReactNode }) {
+/**
+ * Hero intro as one timeline: the arch settles, copy staggers in over it,
+ * then the name card slides from the inline-start side.
+ * Items and card start hidden via globals.css so SSR HTML never flashes before hydration.
+ * Targets: [data-hero="arch"], [data-hero="item"], [data-hero="card"].
+ */
+export default function HeroIntro({ className, children }: { className: string; children: ReactNode }) {
+  const ref = useRef<HTMLElement>(null);
   const { fromStart } = useDir();
+
+  useGSAP(
+    () => {
+      gsap.matchMedia().add(MOTION_OK, () => {
+        gsap
+          .timeline()
+          .addLabel("arch")
+          .from('[data-hero="arch"]', { scale: 0.9, transformOrigin: "50% 100%", duration: DURATION.slow }, "arch")
+          .fromTo('[data-hero="item"]', { autoAlpha: 0, y: RISE }, { autoAlpha: 1, y: 0, stagger: 0.08 }, "arch+=0.1")
+          .fromTo('[data-hero="card"]', { autoAlpha: 0, x: fromStart(24) }, { autoAlpha: 1, x: 0 }, "arch+=0.4");
+      });
+    },
+    { scope: ref },
+  );
+
   return (
-    <m.div
-      className={className}
-      initial={{ opacity: 0, x: fromStart(24) }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: DURATION.base, ease: EASE, delay: 0.4 }}
-    >
+    <section ref={ref} id="top" className={className}>
       {children}
-    </m.div>
+    </section>
   );
 }

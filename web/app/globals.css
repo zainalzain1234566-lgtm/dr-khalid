@@ -72,6 +72,14 @@ html {
   }
 }
 
+/* Hero intro starts hidden; HeroIntro's GSAP timeline reveals it. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-hero="item"],
+  [data-hero="card"] {
+    visibility: hidden;
+  }
+}
+
 @layer base {
   body {
     background: var(--bg);

@@ -1,30 +1,33 @@
 "use client";
 
-import { m, useReducedMotion } from "motion/react";
-import type { ReactNode } from "react";
+import { useRef, type ReactNode } from "react";
+import { MOTION_OK, gsap, onceInView, useGSAP } from "./gsap";
 import { useDir } from "./MotionProvider";
-import { DURATION, EASE, VIEWPORT } from "./tokens";
+import { DURATION } from "./tokens";
 
 /** Wipes its content into view from the inline-start side. */
 export default function ClipReveal({ children, className }: { children: ReactNode; className?: string }) {
   const { isRtl } = useDir();
-  const reduce = useReducedMotion();
-  // inset(top right bottom left): hide everything except the start edge, then open up.
-  const hidden = isRtl ? "inset(0 0 0 100%)" : "inset(0 100% 0 0)";
+  const outer = useRef<HTMLDivElement>(null);
+  const inner = useRef<HTMLDivElement>(null);
 
-  // The outer box is what's observed: a fully clipped element never counts as "in view".
+  useGSAP(() => {
+    gsap.matchMedia().add(MOTION_OK, () => {
+      // inset(top right bottom left): hide everything except the start edge, then open up.
+      // The outer box is observed: a fully clipped element never counts as "in view".
+      gsap.from(inner.current, {
+        clipPath: isRtl ? "inset(0 0 0 100%)" : "inset(0 100% 0 0)",
+        duration: DURATION.slow,
+        scrollTrigger: onceInView(outer.current!),
+      });
+    });
+  });
+
   return (
-    <m.div className={className} initial="hidden" whileInView="show" viewport={VIEWPORT}>
-      <m.div
-        className="size-full"
-        variants={{
-          hidden: { clipPath: hidden },
-          show: { clipPath: "inset(0 0 0 0)" },
-        }}
-        transition={{ duration: reduce ? 0 : DURATION.slow, ease: EASE }}
-      >
+    <div ref={outer} className={className}>
+      <div ref={inner} className="size-full">
         {children}
-      </m.div>
-    </m.div>
+      </div>
+    </div>
   );
 }

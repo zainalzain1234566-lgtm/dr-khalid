@@ -16,8 +16,7 @@ export default function Services({ t = ar }: { t?: Messages }) {
           {s.items.map((item) => (
             <StaggerItem
               key={item.n}
-              whileHover={{ y: -4 }}
-              className="flex flex-col gap-2.5 rounded-md bg-surface p-4 transition-shadow duration-300 lg:gap-4 lg:p-7 lg:shadow-sm lg:hover:shadow-md"
+              className="flex flex-col gap-2.5 rounded-md bg-surface p-4 transition-[box-shadow,translate] duration-300 hover:-translate-y-1 lg:gap-4 lg:p-7 lg:shadow-sm lg:hover:shadow-md"
             >
               <span
                 dir="ltr"
