@@ -5,6 +5,7 @@ import { AnimatePresence, LazyMotion, m } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import ar from "@/messages/ar.json";
 import type { Messages } from "@/lib/i18n";
+import { MOTION_OK, gsap, useGSAP } from "./motion/gsap";
 import Reveal from "./motion/Reveal";
 import { DURATION, EASE } from "./motion/tokens";
 import { SectionTitle } from "./ui";
@@ -16,10 +17,6 @@ const PHOTOS = [
   { id: "12", ar: "1/1" },
   { id: "02", ar: "3/4" },
   { id: "03", ar: "4/3" },
-  { id: "04", ar: "3/4" },
-  { id: "05", ar: "1/1" },
-  { id: "06", ar: "4/3" },
-  { id: "07", ar: "3/4" },
 ].map((p) => ({ ...p, src: `/clinic/${p.id}.webp` }));
 
 // layoutId needs the layout features, which aren't in the app-wide domAnimation bundle.
@@ -32,6 +29,31 @@ export default function Gallery({ t = ar }: { t?: Messages }) {
   const open = PHOTOS.find((p) => p.id === openId);
   const closeBtn = useRef<HTMLButtonElement>(null);
   const opener = useRef<HTMLElement | null>(null);
+  const section = useRef<HTMLElement>(null);
+  const track = useRef<HTMLDivElement>(null);
+
+  // Desktop: pin the section and slide the photo strip sideways as the viewer scrolls down.
+  useGSAP(() => {
+    gsap.matchMedia().add(`(min-width: 1024px) and ${MOTION_OK}`, () => {
+      const el = track.current!;
+      el.dataset.h = "";
+      const dir = document.documentElement.dir === "rtl" ? 1 : -1;
+      const distance = () => el.scrollWidth - el.clientWidth;
+      gsap.to(el, {
+        x: () => dir * distance(),
+        ease: "none",
+        scrollTrigger: {
+          trigger: section.current,
+          start: "center center",
+          end: () => `+=${distance()}`,
+          pin: true,
+          scrub: 0.5,
+          invalidateOnRefresh: true,
+        },
+      });
+      return () => delete el.dataset.h;
+    });
+  });
 
   useEffect(() => {
     if (!openId) return;
@@ -49,12 +71,16 @@ export default function Gallery({ t = ar }: { t?: Messages }) {
 
   return (
     <LazyMotion features={loadLayoutFeatures}>
-      <section className="px-5 py-16 lg:px-8 lg:py-28">
+      <section ref={section} className="px-5 py-16 lg:px-8 lg:py-28">
         <div className="mx-auto flex max-w-[1200px] flex-col gap-6 lg:gap-12">
           <Reveal className="flex flex-col gap-2 lg:gap-3">
             <SectionTitle>{g.title}</SectionTitle>
           </Reveal>
-          <Reveal className="columns-2 gap-2.5 lg:columns-4 lg:gap-4">
+          <Reveal>
+            <div
+              ref={track}
+              className="columns-2 gap-2.5 lg:columns-4 lg:gap-4 data-h:flex data-h:h-[62vh] data-h:columns-auto"
+            >
             {PHOTOS.map((p) => (
               <m.button
                 key={p.id}
@@ -66,7 +92,7 @@ export default function Gallery({ t = ar }: { t?: Messages }) {
                   setOpenId(p.id);
                 }}
                 aria-label={g.openLabel}
-                className="mb-2.5 block w-full cursor-zoom-in break-inside-avoid overflow-hidden rounded-xl focus-visible:ring-[3px] focus-visible:ring-brand-700 focus-visible:outline-none lg:mb-4 lg:rounded-md"
+                className="mb-2.5 block w-full cursor-zoom-in break-inside-avoid overflow-hidden rounded-xl focus-visible:ring-[3px] focus-visible:ring-brand-700 focus-visible:outline-none lg:mb-4 lg:rounded-md [[data-h]_&]:mb-0 [[data-h]_&]:h-full [[data-h]_&]:w-auto [[data-h]_&]:shrink-0"
                 style={{ aspectRatio: p.ar }}
               >
                 <Image
@@ -79,6 +105,7 @@ export default function Gallery({ t = ar }: { t?: Messages }) {
                 />
               </m.button>
             ))}
+            </div>
           </Reveal>
         </div>
       </section>
