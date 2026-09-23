@@ -48,6 +48,7 @@ export default function Gallery({ t = ar }: { t?: Messages }) {
           end: () => `+=${distance()}`,
           pin: true,
           scrub: 0.5,
+          snap: 1 / Math.max(1, el.children.length - 1),
           invalidateOnRefresh: true,
         },
       });

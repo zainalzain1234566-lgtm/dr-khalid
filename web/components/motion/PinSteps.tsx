@@ -28,6 +28,7 @@ export default function PinSteps({ children, className, id }: { children: ReactN
               end: () => `+=${badges.length * 90}`,
               pin: true,
               scrub: 0.5,
+              snap: 1 / badges.length,
               invalidateOnRefresh: true,
             },
           })
