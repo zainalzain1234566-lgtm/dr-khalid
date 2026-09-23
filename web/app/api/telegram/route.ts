@@ -40,6 +40,18 @@ export async function POST(req: Request) {
   if (u.message) {
     const m: Msg = u.message;
     if (String(m.from?.id) !== owner) return Response.json({});
+    if (m.text?.startsWith("/list")) {
+      const { blobs } = await list({ prefix: "cases/" });
+      const idxs = [...new Set(blobs.map((b) => b.pathname.split("/")[1]))].filter((i) => cases[+i]);
+      const sides = (i: string) =>
+        ["before", "after"].filter((s) => blobs.some((b) => b.pathname === `cases/${i}/${s}.webp`)).map((s) => (s === "before" ? "قبل" : "بعد"));
+      await api("sendMessage", {
+        chat_id: m.chat.id,
+        text: idxs.length ? idxs.map((i) => `• ${cases[+i]} (${sides(i).join(" + ")})`).join("\n") : "لا توجد حالات مرفوعة.",
+        reply_markup: { inline_keyboard: idxs.map((i) => [{ text: `🗑 حذف ${cases[+i]}`, callback_data: `d:${i}` }]) },
+      });
+      return Response.json({});
+    }
     if (!webpId(m)) {
       await api("sendMessage", { chat_id: m.chat.id, text: "أرسل صورة بصيغة webp فقط." });
       return Response.json({});
@@ -74,6 +86,11 @@ export async function POST(req: Request) {
     }
     if (blob) await del(pending);
     await edit(`${msg.text ?? ""}\n\n${!blob ? "⚠️ تمت معالجته سابقاً" : idx === "post" ? "✅ تم النشر" : "🗑 تم الحذف"}`);
+  } else if (kind === "d" && cases[+idx]) {
+    const { blobs } = await list({ prefix: `cases/${idx}/` });
+    if (blobs.length) await del(blobs.map((b) => b.url));
+    revalidatePath("/", "layout");
+    await edit(`${msg.text ?? ""}\n\n${blobs.length ? `🗑 تم حذف ${cases[+idx]}` : "⚠️ محذوفة سابقاً"}`);
   } else if (kind === "c" && cases[+idx]) {
     await edit(`${cases[+idx]} — قبل أم بعد؟`, {
       inline_keyboard: [[

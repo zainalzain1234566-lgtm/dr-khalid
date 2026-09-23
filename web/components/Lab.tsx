@@ -4,16 +4,10 @@ import ClipReveal from "./motion/ClipReveal";
 import Reveal from "./motion/Reveal";
 import Stagger, { StaggerItem } from "./motion/Stagger";
 
-function LabPhoto({ label, className }: { label: string; className: string }) {
-  // TODO(clinic): swap for the real lab photo once supplied.
+function LabPhoto({ alt, className }: { alt: string; className: string }) {
   return (
-    <ClipReveal className={className}>
-      <div
-        dir="ltr"
-        className="placeholder-stripes-deep flex size-full items-center justify-center rounded-lg font-mono font-medium text-deep-faint"
-      >
-        {label}
-      </div>
+    <ClipReveal className={`relative overflow-hidden rounded-lg ${className}`}>
+      <Image src="/clinic/06.webp" alt={alt} fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
     </ClipReveal>
   );
 }
@@ -52,14 +46,14 @@ export default function Lab({ t = ar }: { t?: Messages }) {
               <span className="hidden lg:inline">{l.body}</span>
             </p>
           </Reveal>
-          <LabPhoto label={l.photoPlaceholder} className="h-60 text-xs lg:hidden" />
+          <LabPhoto alt={l.photoAlt} className="h-60 lg:hidden" />
           <Stagger className="flex flex-col gap-5 lg:gap-0 lg:border-t lg:border-white/12">
             {l.benefits.map((b) => (
               <Benefit key={b.n} b={b} />
             ))}
           </Stagger>
         </div>
-        <LabPhoto label={l.photoPlaceholder} className="hidden h-[600px] text-sm lg:block" />
+        <LabPhoto alt={l.photoAlt} className="hidden h-[600px] lg:block" />
       </div>
     </section>
   );
