@@ -67,6 +67,24 @@ export default function Gallery({ t = ar }: { t?: Messages }) {
       });
       return () => delete el.dataset.h;
     });
+
+    // Mobile: full-width tiles wipe in from the right, half tiles from the left, while each photo
+    // settles from a slight zoom. The second half tile of each pair trails the first.
+    gsap.matchMedia().add(`(max-width: 1023px) and ${MOTION_OK}`, () => {
+      [...track.current!.children].forEach((tile, i) => {
+        const tl = gsap.timeline({
+          delay: i % 3 === 2 ? 0.12 : 0,
+          scrollTrigger: { trigger: tile, start: "top 90%", once: true },
+        });
+        // inset(top right bottom left): 100% on the left side leaves only the right edge showing.
+        const clipPath = i % 3 ? "inset(0 100% 0 0)" : "inset(0 0 0 100%)";
+        tl.from(tile, { clipPath, duration: 0.8, clearProps: "clipPath" }).from(
+          tile.querySelector("img"),
+          { scale: 1.2, duration: 1.1, clearProps: "transform" },
+          0,
+        );
+      });
+    });
   });
 
   useEffect(() => {

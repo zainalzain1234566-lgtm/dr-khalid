@@ -33,6 +33,11 @@ export default function Hero({ t = ar }: { t?: Messages }) {
             {h.titleBefore}
             <span className="text-brand-500">{h.titleAccent}</span>
             {h.titleAfter}
+            {h.titleSub && (
+              <span className="mt-3 block text-[22px] leading-[1.4] font-semibold tracking-normal text-ink-700 lg:mt-4 lg:text-[32px]">
+                {h.titleSub}
+              </span>
+            )}
           </h1>
         </div>
         <div data-hero="item">
