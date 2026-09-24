@@ -6,7 +6,7 @@ const bone = "rounded-[8px] bg-line motion-safe:animate-pulse";
 
 export default function Loading() {
   return (
-    <div className="overflow-x-clip pb-[84px] lg:pb-0" aria-busy="true" aria-label="جارٍ تحميل الحالات">
+    <div className="themed overflow-x-clip pb-[84px] lg:pb-0" aria-busy="true" aria-label="جارٍ تحميل الحالات">
       <Header />
       <main>
         <nav className="mx-auto flex max-w-[1200px] gap-2 px-5 py-3.5 text-sm text-ink-500 lg:px-8 lg:pt-2 lg:pb-5">
@@ -15,7 +15,7 @@ export default function Loading() {
           <span className="font-semibold text-ink-900">حالاتنا</span>
         </nav>
 
-        <section className="bg-brand-50 px-5 py-8 lg:px-8 lg:py-14">
+        <section data-band className="bg-brand-50 px-5 py-8 lg:px-8 lg:py-14">
           <div className="mx-auto grid max-w-[1200px] items-center gap-6 lg:grid-cols-[1.2fr_1fr] lg:gap-16">
             <div className="flex flex-col gap-3">
               <span className="text-[15px] font-semibold text-brand-700">حالاتنا</span>

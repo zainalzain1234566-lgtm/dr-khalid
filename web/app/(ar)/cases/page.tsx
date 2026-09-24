@@ -15,7 +15,7 @@ export default async function CasesPage({ searchParams }: PageProps<"/cases">) {
   const cases = await allCases(ar);
 
   return (
-    <div className="overflow-x-clip pb-[84px] lg:pb-0">
+    <div className="themed overflow-x-clip pb-[84px] lg:pb-0">
       <Header />
       <main>
         <nav aria-label="مسار التنقل" className="mx-auto flex max-w-[1200px] gap-2 px-5 py-3.5 text-sm text-ink-500 lg:px-8 lg:pt-2 lg:pb-5">
@@ -24,7 +24,7 @@ export default async function CasesPage({ searchParams }: PageProps<"/cases">) {
           <span className="font-semibold text-ink-900">حالاتنا</span>
         </nav>
 
-        <section className="bg-brand-50 px-5 py-8 lg:px-8 lg:py-14">
+        <section data-band className="bg-brand-50 px-5 py-8 lg:px-8 lg:py-14">
           <div className="mx-auto grid max-w-[1200px] items-center gap-6 lg:grid-cols-[1.2fr_1fr] lg:gap-16">
             <div className="flex flex-col gap-3">
               <span className="text-[15px] font-semibold text-brand-700">حالاتنا</span>
@@ -48,7 +48,7 @@ export default async function CasesPage({ searchParams }: PageProps<"/cases">) {
         <CasesGrid cases={cases} initial={typeof t === "string" ? t : undefined} />
 
         <section className="px-4 pb-12 lg:px-8 lg:pb-24">
-          <div className="mx-auto flex max-w-[1200px] flex-col items-center justify-between gap-6 rounded-lg bg-brand-100 px-5 py-8 text-center lg:flex-row lg:px-14 lg:py-12 lg:text-right">
+          <div data-band className="mx-auto flex max-w-[1200px] flex-col items-center justify-between gap-6 rounded-lg bg-brand-100 px-5 py-8 text-center lg:flex-row lg:px-14 lg:py-12 lg:text-right">
             <div className="flex flex-col gap-2">
               <h2 className="font-heading text-[22px] leading-tight font-bold text-ink-900 lg:text-[30px]">هل تريد نتيجة مماثلة؟</h2>
               <p className="text-ink-700">احجز استشارة ونضع لك خطة علاج واضحة.</p>

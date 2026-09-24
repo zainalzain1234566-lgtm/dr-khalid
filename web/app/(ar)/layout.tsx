@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import MotionProvider from "@/components/motion/MotionProvider";
 import t from "@/messages/ar.json";
 import { fontVars } from "@/lib/fonts";
-import { INSTAGRAM_URL, MAPS_URL, SITE_URL } from "@/lib/site";
+import { INSTAGRAM_URL, MAPS_URL, SITE_URL, themeScript } from "@/lib/site";
 import "../globals.css";
 
 export const metadata: Metadata = {
@@ -42,6 +42,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="ar" dir="rtl" className={fontVars} suppressHydrationWarning>
       <body className="grain">
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         <MotionProvider dir="rtl">{children}</MotionProvider>
       </body>

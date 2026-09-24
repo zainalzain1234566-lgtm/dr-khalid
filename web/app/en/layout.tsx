@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import MotionProvider from "@/components/motion/MotionProvider";
 import { en as t } from "@/lib/i18n";
 import { fontVars } from "@/lib/fonts";
-import { SITE_URL } from "@/lib/site";
+import { SITE_URL, themeScript } from "@/lib/site";
 import "../globals.css";
 
 export const metadata: Metadata = {
@@ -27,6 +27,7 @@ export default function EnLayout({ children }: LayoutProps<"/en">) {
   return (
     <html lang="en" dir="ltr" className={fontVars} suppressHydrationWarning>
       <body className="grain">
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <MotionProvider dir="ltr">{children}</MotionProvider>
       </body>
     </html>

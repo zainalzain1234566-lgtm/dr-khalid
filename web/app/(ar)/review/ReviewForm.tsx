@@ -51,7 +51,7 @@ export default function ReviewForm() {
   const busy = phase === "busy";
   return (
     <>
-      <div className="flex flex-col gap-2.5 text-center">
+      <div data-band="bleed" className="flex flex-col gap-2.5 text-center">
         <span className="text-sm font-semibold text-brand-700">آراء المراجعين</span>
         <h1 className="font-heading text-[30px] leading-tight font-bold text-ink-900 lg:text-[44px]">قيّم تجربتك</h1>
         <p className="leading-[1.7] text-ink-500">رأيك يساعدنا نطوّر خدمتنا ويساعد غيرك يختار بثقة.</p>

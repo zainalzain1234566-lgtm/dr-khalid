@@ -1,6 +1,6 @@
 "use client";
 
-/** Switches the homepage between the default theme and Theme B (coral). Persists per browser. */
+/** Switches the site between the default theme and Theme B (coral). Persists per browser. */
 export default function ThemeToggle({ className = "" }: { className?: string }) {
   function toggle() {
     const el = document.documentElement;

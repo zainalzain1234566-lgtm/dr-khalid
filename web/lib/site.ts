@@ -16,3 +16,6 @@ export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://dr-khalid.z
 
 // Uploaded photos are served by a route, not static assets, so next/image can't optimize them (they're webp already).
 export const isUploaded = (src: string) => src.startsWith("/files/");
+
+// Applies the saved theme (see ThemeToggle) before paint on every page, avoiding a flash.
+export const themeScript = `try{if(localStorage.getItem("theme")==="coral")document.documentElement.dataset.theme="coral"}catch(e){}`;
