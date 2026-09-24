@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { isUploaded } from "@/lib/site";
 import { animate, useInView, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState, type KeyboardEvent, type PointerEvent } from "react";
 import { EASE } from "./motion/tokens";
@@ -104,6 +105,7 @@ export default function BeforeAfterSlider({ before, after, label, beforeLabel, a
         <>
           <Image
             src={after}
+            unoptimized={isUploaded(after)}
             alt={afterAlt}
             fill
             sizes={sizes}
@@ -112,6 +114,7 @@ export default function BeforeAfterSlider({ before, after, label, beforeLabel, a
           />
           <Image
             src={before}
+            unoptimized={isUploaded(before)}
             alt={beforeAlt}
             fill
             sizes={sizes}

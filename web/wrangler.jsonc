@@ -1,0 +1,17 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "main": ".open-next/worker.js",
+  "name": "dr-khalid",
+  "compatibility_date": "2026-09-01",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": { "directory": ".open-next/assets", "binding": "ASSETS" },
+  "services": [{ "binding": "WORKER_SELF_REFERENCE", "service": "dr-khalid" }],
+  "r2_buckets": [
+    { "binding": "NEXT_INC_CACHE_R2_BUCKET", "bucket_name": "dr-khalid-cache" },
+    // Reviews + uploaded case photos (lib/storage.ts). "remote": builds and `next dev` read the real
+    // bucket, so pages prerendered at deploy include live reviews/cases (needs `wrangler login`).
+    { "binding": "FILES", "bucket_name": "dr-khalid-files", "remote": true }
+  ],
+  "kv_namespaces": [{ "binding": "NEXT_TAG_CACHE_KV", "id": "37f71adf188549e498582662524bbe14" }],
+  "images": { "binding": "IMAGES" }
+}

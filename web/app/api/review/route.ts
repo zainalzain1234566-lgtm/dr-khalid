@@ -1,4 +1,4 @@
-import { put } from "@vercel/blob";
+import { writeFile } from "@/lib/storage";
 import t from "@/messages/ar.json";
 
 const doctors = [t.doctors.lead, ...t.doctors.team].map((d) => d.name);
@@ -18,10 +18,10 @@ export async function POST(req: Request) {
   }
 
   const id = crypto.randomUUID();
-  await put(
+  await writeFile(
     `reviews/pending/${id}.json`,
     JSON.stringify({ id, name, doctor, case: kase, stars, text, date: new Date().toISOString() }),
-    { access: "public", contentType: "application/json", addRandomSuffix: false },
+    "application/json",
   );
 
   const msg = `⭐ تقييم جديد\n\nالاسم: ${name || "—"}\nالطبيب: ${doctor}\nالحالة: ${kase}\nالتقييم: ${"★".repeat(stars)}${"☆".repeat(5 - stars)}\n\n${text || "—"}`;

@@ -12,4 +12,7 @@ export const MAPS_EMBED = `https://maps.google.com/maps?q=${encodeURIComponent("
 export const phoneHref = `tel:${PHONE_E164}`;
 
 // Public domain; set NEXT_PUBLIC_SITE_URL in production env.
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://dr-khalid-eight.vercel.app";
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://dr-khalid.zainalabdinmuneam.workers.dev";
+
+// Uploaded photos are served by a route, not static assets, so next/image can't optimize them (they're webp already).
+export const isUploaded = (src: string) => src.startsWith("/files/");
