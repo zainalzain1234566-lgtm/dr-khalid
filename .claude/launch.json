@@ -1,1 +1,25 @@
-{"version":"0.0.1","configurations":[{"name":"web","runtimeExecutable":"npm","runtimeArgs":["--prefix","web","run","dev"],"port":3000}]}
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "web",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "web",
+        "run",
+        "dev"
+      ],
+      "port": 3000
+    },
+    {
+      "name": "cf-preview",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": [
+        "-c",
+        "cd web && npx wrangler dev --port 8787"
+      ],
+      "port": 8787
+    }
+  ]
+}

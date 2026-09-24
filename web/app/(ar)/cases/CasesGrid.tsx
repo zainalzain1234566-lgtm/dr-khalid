@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { isUploaded } from "@/lib/site";
 import { useEffect, useRef, useState } from "react";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
 import TapLink from "@/components/motion/TapLink";
@@ -157,7 +158,7 @@ export default function CasesGrid({ cases, initial }: { cases: Case[]; initial?:
                         aria-label={`تكبير صورة ${l}`}
                         className="relative aspect-[3/4] cursor-zoom-in overflow-hidden rounded-[16px] bg-line"
                       >
-                        <Image src={src} alt={fill(alt, m.t)} fill sizes="(min-width: 1024px) 330px, 50vw" className="object-cover" />
+                        <Image src={src} unoptimized={isUploaded(src)} alt={fill(alt, m.t)} fill sizes="(min-width: 1024px) 330px, 50vw" className="object-cover" />
                         <span className="absolute top-3 right-3 rounded-full bg-white/92 px-3 py-1 text-[13px] font-semibold text-ink-900">{l}</span>
                       </button>
                     ))}
@@ -193,7 +194,7 @@ export default function CasesGrid({ cases, initial }: { cases: Case[]; initial?:
         )}
         {zoom && (
           <div onClick={() => setZoom(null)} className="fixed inset-0 z-10 flex items-center justify-center bg-ink-900/92 p-4">
-            <Image src={zoom.src} alt={zoom.alt} width={2048} height={1536} sizes="100vw" className="h-auto max-h-[90dvh] w-auto max-w-full rounded-[16px] object-contain" />
+            <Image src={zoom.src} unoptimized={isUploaded(zoom.src)} alt={zoom.alt} width={2048} height={1536} sizes="100vw" className="h-auto max-h-[90dvh] w-auto max-w-full rounded-[16px] object-contain" />
             <button onClick={() => setZoom(null)} aria-label="إغلاق" className={`${round} absolute top-4 left-4 border-white/30 bg-white/92 text-ink-900`}>✕</button>
           </div>
         )}

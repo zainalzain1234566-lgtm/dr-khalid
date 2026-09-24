@@ -1,4 +1,4 @@
-import { del, head, list, put } from "@vercel/blob";
+import { deleteFiles, listFiles, readText, writeFile } from "@/lib/storage";
 import { revalidatePath } from "next/cache";
 import t from "@/messages/ar.json";
 
@@ -41,10 +41,10 @@ export async function POST(req: Request) {
     const m: Msg = u.message;
     if (String(m.from?.id) !== owner) return Response.json({});
     if (m.text?.startsWith("/list")) {
-      const { blobs } = await list({ prefix: "cases/" });
-      const idxs = [...new Set(blobs.map((b) => b.pathname.split("/")[1]))].filter((i) => cases[+i]);
+      const files = await listFiles("cases/");
+      const idxs = [...new Set(files.map((f) => f.key.split("/")[1]))].filter((i) => cases[+i]);
       const sides = (i: string) =>
-        ["before", "after"].filter((s) => blobs.some((b) => b.pathname === `cases/${i}/${s}.webp`)).map((s) => (s === "before" ? "قبل" : "بعد"));
+        ["before", "after"].filter((s) => files.some((f) => f.key === `cases/${i}/${s}.webp`)).map((s) => (s === "before" ? "قبل" : "بعد"));
       await api("sendMessage", {
         chat_id: m.chat.id,
         text: idxs.length ? idxs.map((i) => `• ${cases[+i]} (${sides(i).join(" + ")})`).join("\n") : "لا توجد حالات مرفوعة.",
@@ -75,22 +75,18 @@ export async function POST(req: Request) {
   if (kind === "r" && (idx === "post" || idx === "del") && /^[\w-]{36}$/.test(side)) {
     // Review moderation: idx = action, side = review id.
     const pending = `reviews/pending/${side}.json`;
-    const blob = await head(pending).catch(() => null);
-    if (blob && idx === "post") {
-      await put(`reviews/approved/${side}.json`, await (await fetch(blob.url)).text(), {
-        access: "public",
-        contentType: "application/json",
-        addRandomSuffix: false,
-      });
+    const review = await readText(pending);
+    if (review && idx === "post") {
+      await writeFile(`reviews/approved/${side}.json`, review, "application/json");
       revalidatePath("/", "layout");
     }
-    if (blob) await del(pending);
-    await edit(`${msg.text ?? ""}\n\n${!blob ? "⚠️ تمت معالجته سابقاً" : idx === "post" ? "✅ تم النشر" : "🗑 تم الحذف"}`);
+    if (review) await deleteFiles([pending]);
+    await edit(`${msg.text ?? ""}\n\n${!review ? "⚠️ تمت معالجته سابقاً" : idx === "post" ? "✅ تم النشر" : "🗑 تم الحذف"}`);
   } else if (kind === "d" && cases[+idx]) {
-    const { blobs } = await list({ prefix: `cases/${idx}/` });
-    if (blobs.length) await del(blobs.map((b) => b.url));
+    const files = await listFiles(`cases/${idx}/`);
+    await deleteFiles(files.map((f) => f.key));
     revalidatePath("/", "layout");
-    await edit(`${msg.text ?? ""}\n\n${blobs.length ? `🗑 تم حذف ${cases[+idx]}` : "⚠️ محذوفة سابقاً"}`);
+    await edit(`${msg.text ?? ""}\n\n${files.length ? `🗑 تم حذف ${cases[+idx]}` : "⚠️ محذوفة سابقاً"}`);
   } else if (kind === "c" && cases[+idx]) {
     await edit(`${cases[+idx]} — قبل أم بعد؟`, {
       inline_keyboard: [[
@@ -105,17 +101,11 @@ export async function POST(req: Request) {
     } else {
       const f = await (await api("getFile", { file_id: fileId })).json();
       const img = await fetch(`https://api.telegram.org/file/bot${process.env.TELEGRAM_BOT_TOKEN}/${f.result.file_path}`);
-      await put(`cases/${idx}/${side}.webp`, await img.arrayBuffer(), {
-        access: "public",
-        contentType: "image/webp",
-        addRandomSuffix: false,
-        allowOverwrite: true,
-        cacheControlMaxAge: 60, // same URL is overwritten on re-upload
-      });
+      await writeFile(`cases/${idx}/${side}.webp`, await img.arrayBuffer(), "image/webp");
       revalidatePath("/");
-      const { blobs } = await list({ prefix: `cases/${idx}/` });
+      const files = await listFiles(`cases/${idx}/`);
       const other = side === "before" ? "after" : "before";
-      const done = blobs.some((b) => b.pathname === `cases/${idx}/${other}.webp`);
+      const done = files.some((f) => f.key === `cases/${idx}/${other}.webp`);
       await edit(
         done
           ? `✅ تم رفع ${cases[+idx]} (قبل وبعد) — ظاهرة الآن في الموقع.`
