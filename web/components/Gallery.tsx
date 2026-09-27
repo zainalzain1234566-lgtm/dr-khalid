@@ -23,13 +23,15 @@ const PHOTOS = [
   { id: "07", w: 2048, h: 1248 },
   { id: "03", w: 2048, h: 1365, ar: "4/3" },
   { id: "05", w: 2048, h: 1365 },
-  { id: "10", w: 2048, h: 1422 },
   { id: "08", w: 2048, h: 1365 },
   { id: "14", w: 2048, h: 1365 },
   { id: "13", w: 2048, h: 1473 },
   { id: "01", w: 1536, h: 1024 },
   { id: "06", w: 2048, h: 1365 },
 ].map((p) => ({ ...p, src: `/clinic/${p.id}.webp` }));
+
+// Mobile half tile? A half tile left alone on the last row goes full width instead.
+const isHalf = (i: number) => i % 3 !== 0 && !(i === PHOTOS.length - 1 && i % 3 === 1);
 
 // layoutId needs the layout features, which aren't in the app-wide domAnimation bundle.
 const loadLayoutFeatures = () => import("./motion/features-max").then((mod) => mod.default);
@@ -77,7 +79,7 @@ export default function Gallery({ t = ar }: { t?: Messages }) {
           scrollTrigger: { trigger: tile, start: "top 90%", once: true },
         });
         // inset(top right bottom left): 100% on the left side leaves only the right edge showing.
-        const clipPath = i % 3 ? "inset(0 100% 0 0)" : "inset(0 0 0 100%)";
+        const clipPath = isHalf(i) ? "inset(0 100% 0 0)" : "inset(0 0 0 100%)";
         tl.from(tile, { clipPath, duration: 0.8, clearProps: "clipPath" }).from(
           tile.querySelector("img"),
           { scale: 1.2, duration: 1.1, clearProps: "transform" },
@@ -125,15 +127,15 @@ export default function Gallery({ t = ar }: { t?: Messages }) {
                   setOpenId(p.id);
                 }}
                 aria-label={g.openLabel}
-                className={`${i % 3 ? "" : "col-span-2"} ${p.ar ? "" : "lg:hidden"} block aspect-(--m) w-full cursor-zoom-in break-inside-avoid overflow-hidden rounded-xl focus-visible:ring-[3px] focus-visible:ring-brand-700 focus-visible:outline-none lg:mb-4 lg:aspect-(--ar) lg:rounded-[1.5rem] [[data-h]_&]:mb-0 [[data-h]_&]:h-full [[data-h]_&]:w-auto [[data-h]_&]:shrink-0`}
-                style={{ "--ar": p.ar, "--m": i % 3 ? "3/2" : `${p.w}/${p.h}` } as React.CSSProperties}
+                className={`${isHalf(i) ? "" : "col-span-2"} ${p.ar ? "" : "lg:hidden"} block aspect-(--m) w-full cursor-zoom-in break-inside-avoid overflow-hidden rounded-xl focus-visible:ring-[3px] focus-visible:ring-brand-700 focus-visible:outline-none lg:mb-4 lg:aspect-(--ar) lg:rounded-[1.5rem] [[data-h]_&]:mb-0 [[data-h]_&]:h-full [[data-h]_&]:w-auto [[data-h]_&]:shrink-0`}
+                style={{ "--ar": p.ar, "--m": isHalf(i) ? "3/2" : `${p.w}/${p.h}` } as React.CSSProperties}
               >
                 <Image
                   src={p.src}
                   alt={g.photoAlt}
                   width={600}
                   height={600}
-                  sizes={`(min-width: 1024px) 290px, ${i % 3 ? "50vw" : "100vw"}`}
+                  sizes={`(min-width: 1024px) 290px, ${isHalf(i) ? "50vw" : "100vw"}`}
                   className="size-full object-cover"
                 />
               </m.button>
