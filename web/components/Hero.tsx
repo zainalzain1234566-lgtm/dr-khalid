@@ -109,7 +109,8 @@ export default function Hero({ t = ar }: { t?: Messages }) {
       </div>
 
       {/* Dr. Khalid breaking out of the arch. The photo is the LCP element, so it stays static. */}
-      <div className="relative order-first h-[400px] lg:order-none lg:h-[640px]">
+      <div className="order-first flex flex-col items-center gap-4 lg:order-none">
+      <div className="relative h-[400px] w-full lg:h-[610px]">
         <div data-hero="arch" className="absolute inset-x-4 bottom-0 h-[320px] rounded-[999px_999px_28px_28px] bg-brand-100 lg:inset-x-5 lg:h-[520px]" />
         <div className="absolute inset-x-4 inset-y-0 overflow-hidden rounded-b-lg lg:inset-x-5">
           <Image
@@ -122,10 +123,12 @@ export default function Hero({ t = ar }: { t?: Messages }) {
             className="absolute bottom-0 left-1/2 h-[380px] w-auto max-w-none -translate-x-1/2 lg:h-[600px]"
           />
         </div>
-        <div data-hero="card" className="bezel absolute end-0 bottom-14 shadow-lg! lg:-end-6 lg:bottom-[110px] [--r:1.25rem] lg:[--r:1.75rem]">
+      </div>
+        {/* Name card sits under the photo, never over it. */}
+        <div data-hero="card" className="bezel shadow-lg! [--r:1.25rem] lg:[--r:1.75rem]">
           <div className="bezel-core flex flex-col gap-0.5 px-3.5 py-2.5 lg:gap-1.5 lg:px-5 lg:py-4">
-          <b className="font-heading text-sm font-semibold text-ink-900 lg:text-[17px]">{h.cardName}</b>
-          <span className="text-xs text-ink-500 lg:text-sm">{h.cardRole}</span>
+            <b className="font-heading text-sm font-semibold text-ink-900 lg:text-[17px]">{h.cardName}</b>
+            <span className="text-xs text-ink-500 lg:text-sm">{h.cardRole}</span>
           </div>
         </div>
       </div>
