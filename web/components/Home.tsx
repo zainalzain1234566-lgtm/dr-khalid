@@ -1,4 +1,5 @@
 import Cases from "./Cases";
+import Certificates from "./Certificates";
 import Doctors from "./Doctors";
 import Footer from "./Footer";
 import Gallery from "./Gallery";
@@ -23,6 +24,7 @@ export default function Home({ t }: { t: Messages }) {
         <Lab t={t} />
         <Cases t={t} />
         <Doctors t={t} />
+        <Certificates t={t} />
         <Gallery t={t} />
         <Reviews t={t} />
         <Location t={t} />

@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Link from "next/link";
+import { certificates, slugOf } from "@/lib/certificates";
 import { ar, type Messages } from "@/lib/i18n";
 import Reveal from "./motion/Reveal";
 import Stagger, { StaggerItem } from "./motion/Stagger";
@@ -18,6 +20,19 @@ function Portrait({ src, alt, frame, sizes }: { src: string; alt: string; frame:
         className="absolute top-0 left-1/2 h-[108%] w-auto max-w-none -translate-x-1/2"
       />
     </div>
+  );
+}
+
+function CertsLink({ img, label }: { img: string; label: string }) {
+  const slug = slugOf(img);
+  return (
+    <Link
+      href={`/certificates?d=${slug}`}
+      className="mx-auto inline-flex w-max items-center gap-1.5 rounded-full bg-surface px-3.5 py-1.5 text-[13px] font-semibold text-brand-700 shadow-sm ring-1 ring-brand-500/15 hover:bg-brand-50"
+    >
+      {label} · {certificates[slug]?.length ?? 0}
+      <span aria-hidden className="rtl:-scale-x-100">→</span>
+    </Link>
   );
 }
 
@@ -48,6 +63,7 @@ export default function Doctors({ t = ar }: { t?: Messages }) {
             <div className="flex flex-col gap-1 text-center">
               <b className="font-heading text-2xl font-semibold text-ink-900">{d.lead.name}</b>
               <span className="text-[15px] text-ink-500">{d.lead.role}</span>
+              <CertsLink img={d.lead.img} label={d.certsLink} />
             </div>
           </StaggerItem>
           <div className="grid grid-cols-[360px_360px] gap-12">
@@ -57,6 +73,7 @@ export default function Doctors({ t = ar }: { t?: Messages }) {
                 <div className="flex flex-col gap-1 text-center">
                   <b className="font-heading text-[22px] font-semibold text-ink-900">{doc.name}</b>
                   <span className="text-[15px] text-ink-500">{doc.role}</span>
+                  <CertsLink img={doc.img} label={d.certsLink} />
                 </div>
               </StaggerItem>
             ))}
@@ -68,6 +85,7 @@ export default function Doctors({ t = ar }: { t?: Messages }) {
           <Portrait src={d.lead.img} alt={d.lead.name} frame="h-[380px] rounded-b-lg" sizes="350px" />
           <b className="text-center font-heading text-[19px] font-semibold text-ink-900">{d.lead.name}</b>
           <span className="-mt-1.5 text-center text-sm text-ink-500">{d.lead.roleShort}</span>
+          <CertsLink img={d.lead.img} label={d.certsLink} />
         </Reveal>
         <Stagger className="grid grid-cols-2 gap-3.5 lg:hidden">
           {d.team.map((doc) => (
@@ -75,6 +93,7 @@ export default function Doctors({ t = ar }: { t?: Messages }) {
               <Portrait src={doc.img} alt={doc.name} frame="h-[220px] rounded-b-[20px]" sizes="240px" />
               <b className="text-center font-heading text-[15px] font-semibold text-ink-900">{doc.name}</b>
               <span className="-mt-1 text-center text-xs text-ink-500">{doc.role}</span>
+              <CertsLink img={doc.img} label={d.certsLink} />
             </StaggerItem>
           ))}
         </Stagger>

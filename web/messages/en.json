@@ -95,6 +95,7 @@
     "eyebrow": "Our doctors",
     "title": "One team, led by Dr. Khalid Al-Attar",
     "titleShort": "One team, led by Dr. Khalid",
+    "certsLink": "Certificates",
     "lead": {
       "name": "Dr. Khalid Jamal Al-Attar",
       "role": "Dentist · Head of Fillings & Veneers",
@@ -113,6 +114,16 @@
         "img": "/doctors/dr-ali.webp"
       }
     ]
+  },
+  "certificates": {
+    "eyebrow": "Certificates",
+    "title": "Credentials behind every smile",
+    "body": "{n} certificates from specialist courses and conferences in Iraq and abroad.",
+    "cta": "All certificates",
+    "statCerts": "certificates",
+    "statDoctors": "doctors",
+    "statSince": "learning since",
+    "swipe": "Swipe to see more"
   },
   "gallery": {
     "eyebrow": "The clinic",
