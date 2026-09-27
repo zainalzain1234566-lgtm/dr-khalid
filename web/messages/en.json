@@ -100,18 +100,18 @@
       "name": "Dr. Khalid Jamal Al-Attar",
       "role": "Dentist · Head of Fillings & Veneers",
       "roleShort": "Dentist · Head of Fillings & Veneers",
-      "img": "/doctors/dr-khalid.webp"
+      "img": "/doctors/v2/dr-khalid.webp"
     },
     "team": [
       {
         "name": "Dr. Karrar Abdulhadi",
         "role": "Dentist · Head of Orthodontics",
-        "img": "/doctors/dr-karrar.webp"
+        "img": "/doctors/v2/dr-karrar.webp"
       },
       {
         "name": "Dr. Ali Al-Aboudi",
         "role": "Dentist · Head of Dental Implants",
-        "img": "/doctors/dr-ali.webp"
+        "img": "/doctors/v2/dr-ali.webp"
       }
     ]
   },

@@ -113,10 +113,10 @@ export default function Hero({ t = ar }: { t?: Messages }) {
         <div data-hero="arch" className="absolute inset-x-4 bottom-0 h-[320px] rounded-[999px_999px_28px_28px] bg-brand-100 lg:inset-x-5 lg:h-[520px]" />
         <div className="absolute inset-x-4 inset-y-0 overflow-hidden rounded-b-lg lg:inset-x-5">
           <Image
-            src="/doctors/dr-khalid.webp"
+            src="/doctors/v2/dr-khalid.webp"
             alt={h.doctorAlt}
-            width={1229}
-            height={1248}
+            width={968}
+            height={1400}
             priority
             sizes="(min-width: 1024px) 600px, 380px"
             className="absolute bottom-0 left-1/2 h-[380px] w-auto max-w-none -translate-x-1/2 lg:h-[600px]"

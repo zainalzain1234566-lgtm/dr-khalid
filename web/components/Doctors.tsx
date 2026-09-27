@@ -14,7 +14,7 @@ function Portrait({ src, alt, frame, sizes }: { src: string; alt: string; frame:
       <Image
         src={src}
         alt={alt}
-        width={1200}
+        width={960}
         height={1400}
         sizes={sizes}
         className="absolute top-0 left-1/2 h-[108%] w-auto max-w-none -translate-x-1/2"

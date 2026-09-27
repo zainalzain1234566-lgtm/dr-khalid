@@ -99,18 +99,18 @@
       "name": "د. خالد جمال العطار",
       "role": "طبيب أسنان · مسؤول قسم الحشوات وتغليفات الأسنان",
       "roleShort": "طبيب أسنان · مسؤول قسم الحشوات وتغليفات الأسنان",
-      "img": "/doctors/dr-khalid.webp"
+      "img": "/doctors/v2/dr-khalid.webp"
     },
     "team": [
       {
         "name": "د. كرار عبد الهادي",
         "role": "طبيب أسنان · مسؤول قسم تقويم الأسنان",
-        "img": "/doctors/dr-karrar.webp"
+        "img": "/doctors/v2/dr-karrar.webp"
       },
       {
         "name": "د. علي العبودي",
         "role": "طبيب أسنان · مسؤول قسم زراعة الأسنان",
-        "img": "/doctors/dr-ali.webp"
+        "img": "/doctors/v2/dr-ali.webp"
       }
     ]
   },
