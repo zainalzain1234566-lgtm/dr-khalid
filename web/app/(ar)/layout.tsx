@@ -40,7 +40,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="ar" dir="rtl" className={fontVars} suppressHydrationWarning>
+    <html lang="ar" dir="rtl" data-theme="coral" className={fontVars} suppressHydrationWarning>
       <body className="grain">
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />

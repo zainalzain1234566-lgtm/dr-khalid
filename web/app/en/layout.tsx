@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 
 export default function EnLayout({ children }: LayoutProps<"/en">) {
   return (
-    <html lang="en" dir="ltr" className={fontVars} suppressHydrationWarning>
+    <html lang="en" dir="ltr" data-theme="coral" className={fontVars} suppressHydrationWarning>
       <body className="grain">
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <MotionProvider dir="ltr">{children}</MotionProvider>
