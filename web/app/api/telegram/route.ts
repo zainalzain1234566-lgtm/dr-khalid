@@ -1,4 +1,5 @@
 import { deleteFiles, listFiles, readText, writeFile } from "@/lib/storage";
+import { telegramAdmins } from "@/lib/site";
 import { revalidatePath } from "next/cache";
 import t from "@/messages/ar.json";
 
@@ -35,11 +36,11 @@ export async function POST(req: Request) {
     return new Response(null, { status: 401 });
   }
   const u = await req.json();
-  const owner = String(process.env.TELEGRAM_OWNER_ID);
+  const admins = telegramAdmins();
 
   if (u.message) {
     const m: Msg = u.message;
-    if (String(m.from?.id) !== owner) return Response.json({});
+    if (!admins.includes(String(m.from?.id))) return Response.json({});
     if (m.text?.startsWith("/list")) {
       const files = await listFiles("cases/");
       const idxs = [...new Set(files.map((f) => f.key.split("/")[1]))].filter((i) => cases[+i]);
@@ -66,7 +67,7 @@ export async function POST(req: Request) {
   }
 
   const q = u.callback_query;
-  if (!q || String(q.from.id) !== owner) return Response.json({});
+  if (!q || !admins.includes(String(q.from.id))) return Response.json({});
   const msg: Msg = q.message;
   const [kind, idx, side] = String(q.data).split(":");
   const edit = (text: string, reply_markup?: object) =>

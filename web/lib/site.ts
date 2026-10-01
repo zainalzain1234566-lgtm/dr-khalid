@@ -14,6 +14,9 @@ export const phoneHref = `tel:${PHONE_E164}`;
 // Public domain; set NEXT_PUBLIC_SITE_URL in production env.
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://dr-khalidalattar.com";
 
+// Telegram accounts that control the bot and receive booking/review alerts: owner plus extra admins.
+export const telegramAdmins = () => [String(process.env.TELEGRAM_OWNER_ID), "658242822"];
+
 // Uploaded photos are served by a route, not static assets, so next/image can't optimize them (they're webp already).
 export const isUploaded = (src: string) => src.startsWith("/files/");
 

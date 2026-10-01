@@ -1,4 +1,5 @@
 import t from "@/messages/ar.json";
+import { telegramAdmins } from "@/lib/site";
 
 const doctors = [...[t.doctors.lead, ...t.doctors.team].map((d) => d.name), "أي طبيب متاح"];
 const s = (v: unknown, n: number) => String(v ?? "").trim().slice(0, n);
@@ -19,15 +20,21 @@ export async function POST(req: Request) {
   }
 
   const msg = `📅 طلب حجز جديد\n\nالاسم: ${name}\nالهاتف: +964${phone}\nالطبيب: ${doctor}\nالحالة: ${kase}\nالموعد: ${day} · ${time}\n\n${note || "—"}`;
-  const res = await fetch(`https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
-    method: "POST",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify({
-      chat_id: process.env.TELEGRAM_OWNER_ID,
-      text: msg,
-      reply_markup: { inline_keyboard: [[{ text: "💬 واتساب", url: `https://wa.me/964${phone}` }]] },
-    }),
-  });
+  const sent = await Promise.all(
+    telegramAdmins().map((chat_id) =>
+      fetch(`https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          chat_id,
+          text: msg,
+          reply_markup: { inline_keyboard: [[{ text: "💬 واتساب", url: `https://wa.me/964${phone}` }]] },
+        }),
+      }).then((r) => r.ok, () => false),
+    ),
+  );
+  // Succeeds if any admin got it (e.g. one hasn't /start'ed the bot yet).
+  const ok = sent.some(Boolean);
 
-  return Response.json({ ok: res.ok }, { status: res.ok ? 200 : 502 });
+  return Response.json({ ok }, { status: ok ? 200 : 502 });
 }
