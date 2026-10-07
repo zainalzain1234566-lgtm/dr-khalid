@@ -24,7 +24,7 @@ export default async function Cases({ t = ar }: { t?: Messages }) {
         </Reveal>
         <Stagger className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           {items.map((item) => (
-            <StaggerItem key={item.t} className="flex flex-col gap-2.5 lg:gap-3.5">
+            <StaggerItem key={item.before} className="flex flex-col gap-2.5 lg:gap-3.5">
               <div className="bezel [--r:1.75rem]">
                 <div className="bezel-core overflow-hidden">
                 <BeforeAfterSlider

@@ -3,6 +3,7 @@
 // types replace the global Request/Response types the API routes rely on.
 interface R2Object {
   key: string;
+  etag: string;
   uploaded: Date;
   httpMetadata?: { contentType?: string };
 }
@@ -11,9 +12,9 @@ interface R2ObjectBody extends R2Object {
   text(): Promise<string>;
 }
 interface R2Bucket {
-  list(options: { prefix: string }): Promise<{ objects: R2Object[] }>;
+  list(options: { prefix: string; cursor?: string }): Promise<{ objects: R2Object[]; truncated: boolean; cursor?: string }>;
   get(key: string): Promise<R2ObjectBody | null>;
-  put(key: string, value: string | ArrayBuffer, options?: { httpMetadata?: { contentType?: string } }): Promise<unknown>;
+  put(key: string, value: string | ArrayBuffer, options?: { httpMetadata?: { contentType?: string }; onlyIf?: Headers }): Promise<R2Object | null>;
   delete(keys: string | string[]): Promise<void>;
 }
 interface CloudflareEnv {
