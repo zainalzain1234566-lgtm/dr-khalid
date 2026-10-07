@@ -18,6 +18,27 @@ export async function writeFile(key: string, body: string | ArrayBuffer, content
   await (await bucket()).put(key, body, { httpMetadata: { contentType } });
 }
 
+export async function writeCasePair(idx: string, before: ArrayBuffer, after: ArrayBuffer) {
+  const files = await bucket();
+  const keys = [`cases/${idx}/before.webp`, `cases/${idx}/after.webp`];
+  const previous = await Promise.all(keys.map(async (key) => {
+    const object = await files.get(key);
+    return object && { body: await new Response(object.body).arrayBuffer(), httpMetadata: object.httpMetadata };
+  }));
+  // ponytail: snapshots recover failed writes; a manifest is needed for atomic concurrent pair updates.
+  try {
+    await files.put(keys[0], before, { httpMetadata: { contentType: "image/webp" } });
+    await files.put(keys[1], after, { httpMetadata: { contentType: "image/webp" } });
+    return "saved";
+  } catch {
+    const restored = await Promise.allSettled(keys.map((key, i) => {
+      const old = previous[i];
+      return old ? files.put(key, old.body, { httpMetadata: old.httpMetadata }) : files.delete(key);
+    }));
+    return restored.every((result) => result.status === "fulfilled") ? "restored" : "partial";
+  }
+}
+
 export async function deleteFiles(keys: string[]) {
   if (keys.length) await (await bucket()).delete(keys);
 }
