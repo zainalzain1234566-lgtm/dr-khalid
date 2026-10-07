@@ -56,11 +56,12 @@ async function run(image, options = {}) {
       return options.info ?? { width: 10, height: options.height ?? 8 };
     },
     input(stream) {
-      let trim;
+      let transform;
       return {
-        transform(settings) { trim = settings.trim; return this; },
+        transform(settings) { transform = settings; return this; },
         async output(settings) {
-          conversions.push({ settings, trim, bytes: Buffer.from(await new Response(stream).arrayBuffer()) });
+          const trim = transform?.trim;
+          conversions.push({ settings, transform, trim, bytes: Buffer.from(await new Response(stream).arrayBuffer()) });
           if (options.conversionError || options.failConversion === conversions.length) throw new Error("Transformation quota exceeded");
           const bytes = options.emptyOutput ? Buffer.alloc(0) : trim ? trim.bottom !== undefined ? topWebp : bottomWebp : webp;
           return { response: () => new Response(bytes, { status: options.conversionStatus ?? 200 }) };
@@ -118,6 +119,10 @@ for (const [image, fileId, bytes, converts] of [
   assert.equal(result.conversions.length, converts);
   if (converts) {
     assert.equal(result.conversions[0].settings.format, "image/webp");
+    assert.equal(result.conversions[0].settings.quality, 85);
+    assert.equal(result.conversions[0].transform.width, 1920);
+    assert.equal(result.conversions[0].transform.height, 1920);
+    assert.equal(result.conversions[0].transform.fit, "scale-down");
     assert.deepEqual(result.conversions[0].bytes, jpeg);
   }
   assert.equal(result.writes.length, 1);
@@ -173,6 +178,10 @@ for (const image of [jpgFile, webpFile, photo]) {
       for (const conversion of result.conversions) {
         assert.deepEqual(conversion.bytes, bytes); // Both crops start from original, not an encoded intermediate.
         assert.equal(conversion.settings.format, "image/webp");
+        assert.equal(conversion.settings.quality, 85);
+        assert.equal(conversion.transform.width, 1920);
+        assert.equal(conversion.transform.height, 1920);
+        assert.equal(conversion.transform.fit, "scale-down");
       }
       assert.deepEqual(result.objects.get(beforeKey).bytes, side === "top" ? topWebp : bottomWebp);
       assert.deepEqual(result.objects.get(afterKey).bytes, side === "top" ? bottomWebp : topWebp);

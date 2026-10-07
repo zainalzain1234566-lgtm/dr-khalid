@@ -51,7 +51,9 @@ async function transformWebp(bytes: ArrayBuffer, trim?: { top?: number; bottom?:
   const { env } = await getCloudflareContext({ async: true });
   if (!env.IMAGES) throw new Error("Images binding unavailable");
   const input = env.IMAGES.input(new Response(bytes).body!);
-  const output = await (trim ? input.transform({ trim }) : input).output({ format: "image/webp" });
+  // ponytail: one display size covers cards and zoom; no responsive-image storage needed.
+  const resized = input.transform({ ...(trim ? { trim } : {}), width: 1920, height: 1920, fit: "scale-down" });
+  const output = await resized.output({ format: "image/webp", quality: 85 });
   const converted = output.response();
   if (!converted.ok) throw new Error("Image conversion failed");
   const result = await converted.arrayBuffer();
